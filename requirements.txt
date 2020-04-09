@@ -9,3 +9,4 @@ beautifulsoup4==4.6.3
 bs4==0.0.1
 natsort==7.0.1
 urllib3==1.24
+lxml==4.5.0
