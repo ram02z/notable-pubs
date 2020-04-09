@@ -44,8 +44,29 @@ def heroes():
                 l= td.find("a")
                 if l is not None:
                     ids.append(l.attrs['title'])
+        ids = [i for n, i in enumerate(ids) if i not in ids[:n]] 
     return ids
-
+##Player match record##
+def lowl():
+    soup = pagereq("")
+    played = []
+    table_id = soup.find(id="table_pro")
+    rows = table_id.findAll('tr')
+    second_columns = []
+    for row in rows[1:]:
+        second_columns.append(row.findAll('td')[1].text)
+    return second_columns
+##Amount each hero is played##
+def spam():
+    soup = pagereq("")
+    played = []
+    table_id = soup.find(id="table_id")
+    rows = table_id.findAll('tr')
+    third_columns = []
+    for row in rows[1:]:
+        third_columns.append(row.findAll('td')[2].text)
+    return third_columns
+    
 ##Specific Hero##
 def hero(player, hero,outcome):
     soup = pagereq(f"hero/{hero}")
@@ -77,17 +98,26 @@ def hero(player, hero,outcome):
 
 if __name__ == "__main__":
     #tests#
-    A, B, C, D = hero("Taiga","Mars","green")
-    E, F, G, H = hero("Taiga","Mars","red")
-    times = C + G
-    print(times)
-    secs = 0
-    for i in times:
-        m, s = i.split(':')
-        secs += (int(m)*60) + int(s)
-    print(secs)
-    avg = secs/len(times)
-    print(avg)
+    list_a = heroes()
+    #print(len(list_a))
+    list_b = spam()
+    #print(len(list_b))
+    #print(list_b)
+    merged = list(zip(list_a, list_b))
+    merged = sorted(merged)
+    for i in merged:
+        print(i[0])
+    #A, B, C, D = hero("Taiga","Mars","green")
+    #E, F, G, H = hero("Taiga","Mars","red")
+    #times = C + G
+    #print(times)
+    #secs = 0
+    #for i in times:
+    #    m, s = i.split(':')
+    #    secs += (int(m)*60) + int(s)
+    #print(secs)
+    #avg = secs/len(times)
+    #print(avg)
     #res1 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr} for key, mmr, dur, wol in zip(A, B, C, D)}
     #res2 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr} for key, mmr, dur, wol in zip(E, F, G, H)}
     #allmatches = {**res1, **res2}

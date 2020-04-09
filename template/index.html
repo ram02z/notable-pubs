@@ -24,18 +24,18 @@
         <div class="form-group">
           <div id="hero-wrapper" class="m2">
             <label class= "text-primary font-weight-bold " for="heroes">Heroes :&nbsp;</label>
-            <select class="selectpicker" data-live-search="true" name ="heroes" id="heroes" title="Select a hero" data-size="8">
+            <select data-width="260px" class="selectpicker" data-live-search="true" name ="heroes" id="heroes" title="Select a hero" data-size="8">
               {%for i in hero_names%}
-              <option value="{{i}}">{{i}}</option>
+              <option data-subtext="{{ i[1] }} picks" value="{{ i[0] }}">{{i[0]}}</option>
               {%endfor%}
             </select>
           </div>
           <br>
           <div id="player-wrapper" class="m2">
             <label class="text-primary font-weight-bold" for="players">Players :</label>
-            <select class="selectpicker" data-live-search="true" name="players" id="players" title="Select a player" data-size="8">
+            <select data-width="260px" class="selectpicker" data-live-search="true" name="players" id="players" title="Select a player" data-size="8">
               {%for j in player_names%}
-              <option value="{{j}}">{{j}}</option>
+              <option data-subtext="{{ j[1] }} games" value="{{ j[0] }}">{{j[0]}}</option>
               {%endfor%}
             </select>
           </div>
