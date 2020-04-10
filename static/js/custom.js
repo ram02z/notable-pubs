@@ -17,8 +17,8 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        "searching": !1,
-        "stateSave": !0,
+        "searching": 0,
+        "stateSave": 1,
         "stateDuration": 0
     })
 })

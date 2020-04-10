@@ -51,7 +51,13 @@ a svg:focus {
         transform: translateX(-50%)
     }
 }
-
+@media (min-width: 768px) {
+    .collapsing {
+        -webkit-transition: none;
+        transition: none;
+        display: none;
+}
+}
 #winloss_info {
     color: #0275d8
 }

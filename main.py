@@ -60,7 +60,6 @@ def index():
             res2 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr} for key, mmr, dur, wol in zip(E, F, G, H)}
             allmatches = {**res1, **res2}
             flash(f"Showing {player}'s match-ids for {hero}. Win Percentage: {percent(A,E)}, Average duration: {duration(C,G)}, Average MMR: {average_mmr(B,F)}.", 'primary')
-            return render_template("index.html", player_names=player_names, hero_names=hero_names, result = allmatches)
     return render_template("index.html", player_names = player_names, hero_names= hero_names, result = allmatches)
 
 

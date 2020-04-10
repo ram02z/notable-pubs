@@ -18,22 +18,22 @@
     </a>
     <h2 class="m-0 align-middle center-x"><span class="badge badge-primary align-middle">NOTABLE PUBS</span></h2>
   </nav>
-  <div class="container">
+  <div class="container-md">
       {% if hero_names and player_names%}
       <form id= "select-form" class="row justify-content-center align-items-center mt-2" method="post">
-        <div class="form-group">
-          <div id="hero-wrapper" class="m2">
-            <label class= "text-primary font-weight-bold " for="heroes">Heroes :&nbsp;</label>
-            <select data-width="260px" class="selectpicker" data-live-search="true" name ="heroes" id="heroes" title="Select a hero" data-size="8">
+        <div class="form-group col-md-6 text-center">
+          <div id="hero-wrapper">
+            <label class= "text-primary font-weight-bold " for="heroes">Heroes : </label>
+            <select data-width="100%" class="selectpicker" data-live-search="true" name ="heroes" id="heroes" title="Select a hero" data-size="8" required>
               {%for i in hero_names%}
               <option data-subtext="{{ i[1] }} picks" value="{{ i[0] }}">{{i[0]}}</option>
               {%endfor%}
             </select>
           </div>
           <br>
-          <div id="player-wrapper" class="m2">
+          <div id="player-wrapper">
             <label class="text-primary font-weight-bold" for="players">Players :</label>
-            <select data-width="260px" class="selectpicker" data-live-search="true" name="players" id="players" title="Select a player" data-size="8">
+            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select a player" data-size="8" required >
               {%for j in player_names%}
               <option data-subtext="{{ j[1] }} games" value="{{ j[0] }}">{{j[0]}}</option>
               {%endfor%}
@@ -41,8 +41,32 @@
           </div>
             <div class="text-center">
               <button id="submit" value="submit" type="submit" class="btn btn-primary btn-block mt-4" disabled>Search</button>
+              <button class="btn btn-primary btn-block mt-4 btn-sm" type="button" data-toggle="collapse" data-target="#collapse-options" aria-expanded="false" aria-controls="collapse-options">Refine
+                <span class="badge badge-light">beta</span>
+              </button>
             </div>
         </div>
+        <div class="collapse col-md-6 form-group" id="collapse-options">
+          <div class="card card-body text-center">
+            <div id="lane-wrapper">
+              <label class="text-primary font-weight-bold" for="lane">Lane matchup :</label>
+              <select data-header="Query subject's lane" data-width="100%" class="selectpicker" name="lane" id="lane" title="Select a lane" data-size="8" multiple data-max-options="1" disabled>
+                <option value="Off">Off</option>
+                <option value="Safe">Safe</option>
+                <option value="Mid">Mid</option>
+              </select>
+            </div>
+            <br>
+            <div id="matchup-wrapper">
+              <label class="text-primary font-weight-bold mt-2" for="matchup">Hero matchup :</label>
+              <select data-width="100%" class="selectpicker" data-live-search="true" name="matchup" id="matchup" title="Select a hero" data-size="8" multiple data-max-options="2" disabled>
+                {%for k in hero_names%}
+                <option value="{{ k[0] }}">{{k[0]}}</option>
+                {%endfor%}
+              </select>
+            </div>
+          </div>
+      </div>
       </form>
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
