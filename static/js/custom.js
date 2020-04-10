@@ -21,4 +21,16 @@ $(document).ready(function() {
         "stateSave": 1,
         "stateDuration": 0
     })
-})
+});
+
+$(document).ready(function(){
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+            $('.selectpicker').selectpicker('mobile');
+        }
+    });
+
+$('#reset').click(function(){
+   $("[name=inline_radio]").prop("checked",false);
+});
+
+
