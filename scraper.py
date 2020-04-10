@@ -20,14 +20,11 @@ def peeps():
     players = []
     if "<urlopen error" not in soup:
         table_pro = soup.find(id="table_pro")
-        tbody = table_pro.find("tbody")
-        trs = tbody.find_all("tr")
-        for tr in trs:
-            tds = tr.find_all("td")
-            for td in tds:
-                l= td.find("a")
-                if l is not None:
-                    players.append(l.attrs['title'])
+        rows = table_pro.findAll('tr')
+        for row in rows[1:]:
+            td = (row.findAll('td')[0])
+            l = td.find("a")
+            players.append(l.attrs['title'])
     return players
 
 ##Hero names##
@@ -36,16 +33,13 @@ def heroes():
     ids = []
     if "<urlopen error" not in soup:
         table_id = soup.find(id="table_id")
-        tbody = table_id.find("tbody")
-        trs = tbody.find_all("tr")
-        for tr in trs:
-            tds = tr.find_all("td")
-            for td in tds:
-                l= td.find("a")
-                if l is not None:
-                    ids.append(l.attrs['title'])
-        ids = [i for n, i in enumerate(ids) if i not in ids[:n]] 
+        rows = table_id.findAll('tr')
+        for row in rows[1:]:
+            td = (row.findAll('td')[1])
+            l = td.find("a")
+            ids.append(l.attrs['title'])
     return ids
+
 ##Player match record##
 def lowl():
     soup = pagereq("")
@@ -66,47 +60,50 @@ def spam():
     for row in rows[1:]:
         third_columns.append(row.findAll('td')[2].text)
     return third_columns
+
+##checks the laning tab in opendota
+def lane(hero):
+    #checks whether the match has been parsed by opendota using a seperate function to...
+    #...verify if div that holds "needs parsing" message exists.
+    #hero name is stored in attribute data-for in the img tag
+    #lane is in the same tr between span tags where hero name was found
+    pass
     
 ##Specific Hero##
 def hero(player, hero,outcome):
     soup = pagereq(f"hero/{hero}")
     match_ids,avg_mmr, match_time, loutcome = ([] for _ in range(4))
     if "<urlopen error" not in soup:
-        table_matches = soup.find(id="table_matches")
-        tbody = table_matches.find("tbody")
-        trs = tbody.find_all("tr")
-        for tr in trs:
-            tds = tr.find_all("td")
-            for td in tds:
-                l= td.find("a")
-                if l is not None:
-                    if l.attrs['href'] == f"/player/{player}" and tr.find("img", class_=f"{outcome}"):
-                        data = tr.find_all("td", { "class":"dt-body-center" })
-                        numbers = [d.text for d in data]
-                        for i in numbers:
-                            if ":" in i:
-                                match_time.append(i)
-                        avg_mmr.append(max(numbers))
-                        links = tr.find("a", class_="info")
-                        match_ids.append(''.join(filter(str.isdigit, links.attrs['href'])))
-                        if outcome == "green":
-                            loutcome.append("win")
-                        else:
-                            loutcome.append("loss")
+        table = soup.find(id="table_matches")
+        rows = table.findAll('tr')
+        for row in rows[1:]:
+            tds = (row.findAll('td'))
+            l = tds[1].find("a")
+            if l.attrs['href'] == f"/player/{player}" and row.find("img", class_=f"{outcome}"):
+                match_time.append(tds[7].text)
+                avg_mmr.append(tds[4].text)
+                links = row.find("a", class_="info")
+                match_ids.append(''.join(filter(str.isdigit, links.attrs['href'])))
+                if outcome == "green":
+                    loutcome.append("win")
+                else:
+                    loutcome.append("loss")
     #order of matches in list is new to old       
     return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1]
 
 if __name__ == "__main__":
     #tests#
-    list_a = heroes()
-    #print(len(list_a))
-    list_b = spam()
+    import time
+    start_time = time.process_time()
+    print(hero("QO","Phantom Lancer","green"))
+    print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
+    #list_b = lowl()
     #print(len(list_b))
     #print(list_b)
-    merged = list(zip(list_a, list_b))
-    merged = sorted(merged)
-    for i in merged:
-        print(i[0])
+    #merged = list(zip(list_a, list_b))
+    #merged = sorted(merged)
+    #for i in merged:
+    #    print(i[0])
     #A, B, C, D = hero("Taiga","Mars","green")
     #E, F, G, H = hero("Taiga","Mars","red")
     #times = C + G
