@@ -30,7 +30,25 @@ $(document).ready(function(){
     });
 
 $('#reset').click(function(){
+   $("#matchup").val('').trigger('change');
+   $('#matchup-wrapper').collapse('hide');
    $("[name=inline_radio]").prop("checked",false);
+   $("#matchup").prop("disabled",true);
+   $("#matchup").selectpicker('refresh');
+});
+
+$('[name="inline_radio"]').on('change', function() {
+  $("#matchup").prop("disabled",false);
+  $("#matchup").selectpicker('refresh');
+  $("#matchup").val('').trigger('change');
+  if($(this).val() === "Mid"){
+    $('#matchup-wrapper').collapse('show');
+    }else if($(this).val() === "Off") {
+    $('#matchup-wrapper').collapse('show')
+    }else if($(this).val() === "Safe") {
+    $('#matchup-wrapper').collapse('show')
+
+  }
 });
 
 

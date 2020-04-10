@@ -51,15 +51,15 @@
             <div id="lane-wrapper">
               <label class="d-block text-primary font-weight-bold" for="lane-wrapper">Lane :</label>
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="radio1" name="inline_radio" class="custom-control-input">
+                <input value="Mid" type="radio" id="radio1" name="inline_radio" class="custom-control-input">
                 <label class="custom-control-label" for="radio1">Mid</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="radio2" name="inline_radio" class="custom-control-input">
+                <input value="Off" type="radio" id="radio2" name="inline_radio" class="custom-control-input">
                 <label class="custom-control-label" for="radio2">Off</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="radio3" name="inline_radio" class="custom-control-input">
+                <input value="Safe" type="radio" id="radio3" name="inline_radio" class="custom-control-input">
                 <label class="custom-control-label" for="radio3">Safe</label>
               </div>
               <a id="reset" class="text-primary font-weight-bold" aria-label="Reset">
@@ -69,9 +69,9 @@
               </a>
             </div>
             <br>
-            <div id="matchup-wrapper">
+            <div class="collapse" id="matchup-wrapper">
               <label class="text-primary font-weight-bold mt-2" for="matchup">Hero matchup :</label>
-              <select data-width="100%" class="selectpicker" data-live-search="true" name="matchup" id="matchup" title="Select a hero" data-size="8" multiple data-max-options="2" disabled>
+              <select data-width="100%" class="selectpicker" data-live-search="true" name="matchup" id="matchup" title="Select a hero" data-size="8" disabled>
                 {%for k in hero_names%}
                 <option value="{{ k[0] }}">{{k[0]}}</option>
                 {%endfor%}
