@@ -1,24 +1,19 @@
-from urllib.request import urlopen
-from urllib.parse import quote
-from urllib.error import URLError, HTTPError
-from bs4 import BeautifulSoup
+import requests
+from requests.utils import requote_uri
+from bs4 import BeautifulSoup, SoupStrainer
 
 def pagereq(extra):
-    try:
-        with urlopen(f"http://www.dota2protracker.com/{quote(extra)}") as response:
-            soup = BeautifulSoup(response, 'lxml')
-        return soup
-    except HTTPError as e:
-        return str(e)
-    except URLError as e:
-        return str(e)
-        
+    response = requests.get(f"http://www.dota2protracker.com/{requote_uri(extra)}")
+    strainer = SoupStrainer('table')
+    soup = BeautifulSoup(response.content, 'lxml', parse_only=strainer)
+    return soup ,response.status_code
+
 
 ##Pro player names##
 def peeps():
-    soup = pagereq("")
+    soup,status = pagereq("")
     players = []
-    if "<urlopen error" not in soup:
+    if status == 200:
         table_pro = soup.find(id="table_pro")
         rows = table_pro.findAll('tr')
         for row in rows[1:]:
@@ -29,9 +24,9 @@ def peeps():
 
 ##Hero names##
 def heroes():
-    soup = pagereq("")
+    soup,status = pagereq("")
     ids = []
-    if "<urlopen error" not in soup:
+    if status == 200:
         table_id = soup.find(id="table_id")
         rows = table_id.findAll('tr')
         for row in rows[1:]:
@@ -42,7 +37,7 @@ def heroes():
 
 ##Player match record##
 def lowl():
-    soup = pagereq("")
+    soup,status = pagereq("")
     played = []
     table_id = soup.find(id="table_pro")
     rows = table_id.findAll('tr')
@@ -52,7 +47,7 @@ def lowl():
     return second_columns
 ##Amount each hero is played##
 def spam():
-    soup = pagereq("")
+    soup,status = pagereq("")
     played = []
     table_id = soup.find(id="table_id")
     rows = table_id.findAll('tr')
@@ -71,9 +66,9 @@ def lane(hero):
     
 ##Specific Hero##
 def hero(player, hero,outcome):
-    soup = pagereq(f"hero/{hero}")
+    soup, status = pagereq(f"hero/{hero}")
     match_ids,avg_mmr, match_time, loutcome = ([] for _ in range(4))
-    if "<urlopen error" not in soup:
+    if status == 200:
         table = soup.find(id="table_matches")
         rows = table.findAll('tr')
         for row in rows[1:]:
@@ -118,14 +113,5 @@ if __name__ == "__main__":
     #res1 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr} for key, mmr, dur, wol in zip(A, B, C, D)}
     #res2 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr} for key, mmr, dur, wol in zip(E, F, G, H)}
     #allmatches = {**res1, **res2}
-    #import pprint
-    #for k, parent in allmatches.items():
-    #    print(parent['duration'])
 
-    #pprint.pprint(allmatches.items())
-    #match-ids based on mmr in descending order#
-    #sortbyMMR = [x for _, x in sorted(zip(B,A), key=lambda pair: pair[0],reverse= True)]
-    #print(sortbyMMR)
-    #match-ids based on match duration in descending order
-    #sortbyDUR = [x for _, x in sorted(zip(C,A), key=lambda pair: pair[0], reverse=True)]
-    #print(sortbyDUR)
+
