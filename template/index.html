@@ -33,7 +33,7 @@
           <br>
           <div id="player-wrapper">
             <label class="text-primary font-weight-bold" for="players">Players :</label>
-            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select a player" data-size="8" required multiple data-actions-box="true">
+            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" required multiple data-actions-box="true">
               {%for j in player_names%}
               <option data-subtext="{{ j[1] }} games" value="{{ j[0] }}">{{j[0]}}</option>
               {%endfor%}
