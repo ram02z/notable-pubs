@@ -50,16 +50,20 @@ def index():
     allmatches = []
     if request.method == "POST":
         hero = request.form.get("heroes")
-        player = request.form.get("players")
-        A, B , C, D = scraper.hero(player,hero,"green")
-        E, F, G, H = scraper.hero(player, hero, "red")
+        player = request.form.getlist("players")
+        A, B , C, D ,E = scraper.hero(player,hero,"green")
+        F , G , H , I, J = scraper.hero(player, hero, "red")
+        if len(player) == 1:
+            player = player[0]
+        else:
+            player = "selected players"
         if len(A) == 0 and len(E) == 0:
             flash(f"No matches from {player} found for {hero}. Please note only matches from the past 8 days are queried.", 'danger')
         else:
-            res1 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr} for key, mmr, dur, wol in zip(A, B, C, D)}
-            res2 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr} for key, mmr, dur, wol in zip(E, F, G, H)}
+            res1 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr, 'name': pn} for key, mmr, dur, wol, pn in zip(A, B , C, D ,E)}
+            res2 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr, 'name': pn} for key, mmr, dur, wol, pn in zip(F , G , H , I, J)}
             allmatches = {**res1, **res2}
-            flash(f"Showing {player}'s match-ids for {hero}. Win Percentage: {percent(A,E)}, Average duration: {duration(C,G)}, Average MMR: {average_mmr(B,F)}.", 'primary')
+            flash(f"Showing match-ids from {player} for {hero}. Win Percentage: {percent(A,F)}, Average duration: {duration(C,H)}, Average MMR: {average_mmr(B,G)}.", 'primary')
     return render_template("index.html", player_names = player_names, hero_names= hero_names, result = allmatches)
 
 

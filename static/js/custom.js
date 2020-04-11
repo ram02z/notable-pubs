@@ -50,5 +50,7 @@ $('[name="inline_radio"]').on('change', function() {
 
   }
 });
-
+$(document).ready(function() {
+    $("[rel='tooltip'], .tooltip").tooltip();
+});
 

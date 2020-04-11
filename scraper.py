@@ -67,30 +67,35 @@ def lane(hero):
 ##Specific Hero##
 def hero(player, hero,outcome):
     soup, status = pagereq(f"hero/{hero}")
-    match_ids,avg_mmr, match_time, loutcome = ([] for _ in range(4))
+    match_ids,avg_mmr, match_time, loutcome,pro_names = ([] for _ in range(5))
     if status == 200:
         table = soup.find(id="table_matches")
         rows = table.findAll('tr')
         for row in rows[1:]:
             tds = (row.findAll('td'))
             l = tds[1].find("a")
-            if l.attrs['href'] == f"/player/{player}" and row.find("img", class_=f"{outcome}"):
-                match_time.append(tds[7].text)
-                avg_mmr.append(tds[4].text)
-                links = row.find("a", class_="info")
-                match_ids.append(''.join(filter(str.isdigit, links.attrs['href'])))
-                if outcome == "green":
-                    loutcome.append("win")
-                else:
-                    loutcome.append("loss")
+            for i in player:
+                if l.attrs['href'] == f"/player/{i}" and row.find("img", class_=f"{outcome}"):
+                    if not len(player) == 1:
+                        pro_names.append(i)
+                    else:
+                        pro_names.append("0")
+                    match_time.append(tds[7].text)
+                    avg_mmr.append(tds[4].text)
+                    links = row.find("a", class_="info")
+                    match_ids.append(''.join(filter(str.isdigit, links.attrs['href'])))
+                    if outcome == "green":
+                        loutcome.append("win")
+                    else:
+                        loutcome.append("loss")
     #order of matches in list is new to old       
-    return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1]
+    return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1], pro_names[::-1]
 
 if __name__ == "__main__":
     #tests#
     import time
     start_time = time.process_time()
-    print(hero("QO","Phantom Lancer","green"))
+    print(hero(["Kuku"],"Mars","green"))
     print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
     #list_b = lowl()
     #print(len(list_b))

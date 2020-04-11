@@ -33,7 +33,7 @@
           <br>
           <div id="player-wrapper">
             <label class="text-primary font-weight-bold" for="players">Players :</label>
-            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select a player" data-size="8" required >
+            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select a player" data-size="8" required multiple data-actions-box="true">
               {%for j in player_names%}
               <option data-subtext="{{ j[1] }} games" value="{{ j[0] }}">{{j[0]}}</option>
               {%endfor%}
@@ -101,7 +101,7 @@
         {% if result %}
           {% for k, parent in result.items() %}
               <tr {%if parent['outcome'] == 'win' %} class= "table-success"{% endif %}{%if parent['outcome'] == 'loss'%} class ="table-danger"{%endif%}>
-                <td>{{k}}</td>
+                <td ><span {%if parent['name'] != "0"%} rel="tooltip" data-placement="right" title="{{ parent['name'] }}"{% endif %}>{{k}}</span></td>
                 <td>{{parent['avgmmr']}}</td>
                 <td>{{parent['duration']}}</td>
               </tr>
@@ -134,7 +134,7 @@
             <p><b>Notable Pubs</b> is a web-app made to scrape the relevant data straight from <a href="http://dota2protracker.com" class="text-decoration-none" target="_blank">dota2protracker.com</a>, meaning no API calls are made by this web-app directly.</p>
             <p>Player data is limited based on their activity(players with <10 matches in the past 8 days are not listed in the dropdown).</p>
             <p>Table rows are colored based on the outcome of the respective match.(green for win and red for loss)</p>
-            <p>The latest queried result page should appear on the table view indefinitely by utilising the browser's <code>localStorage</code>.</p>
+            <p>In order to check the player name when a query had multiple players, hover over the matchid.</p>
           </div>
           <div class="modal-footer justify-content-center bg-primary text-light">
             <p>Made with <span class="love">♥</span> by <a class="twitter text-decoration-none" href="https://twitter.com/ram02z" target="_blank">@ram02z</a></p>
