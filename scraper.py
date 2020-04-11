@@ -2,8 +2,8 @@ import requests
 from requests.utils import requote_uri
 from bs4 import BeautifulSoup, SoupStrainer
 
-def pagereq(extra):
-    response = requests.get(f"http://www.dota2protracker.com/{requote_uri(extra)}")
+def pagereq(url):
+    response = requests.get(url)
     strainer = SoupStrainer('table')
     soup = BeautifulSoup(response.content, 'lxml', parse_only=strainer)
     return soup ,response.status_code
@@ -11,7 +11,7 @@ def pagereq(extra):
 
 ##Pro player names##
 def peeps():
-    soup,status = pagereq("")
+    soup,status = pagereq("http://www.dota2protracker.com/")
     players = []
     if status == 200:
         table_pro = soup.find(id="table_pro")
@@ -24,7 +24,7 @@ def peeps():
 
 ##Hero names##
 def heroes():
-    soup,status = pagereq("")
+    soup,status = pagereq("http://www.dota2protracker.com/")
     ids = []
     if status == 200:
         table_id = soup.find(id="table_id")
@@ -37,7 +37,7 @@ def heroes():
 
 ##Player match record##
 def lowl():
-    soup,status = pagereq("")
+    soup,status = pagereq("http://www.dota2protracker.com/")
     played = []
     table_id = soup.find(id="table_pro")
     rows = table_id.findAll('tr')
@@ -47,7 +47,7 @@ def lowl():
     return second_columns
 ##Amount each hero is played##
 def spam():
-    soup,status = pagereq("")
+    soup,status = pagereq("http://www.dota2protracker.com/")
     played = []
     table_id = soup.find(id="table_id")
     rows = table_id.findAll('tr')
@@ -66,7 +66,7 @@ def lane(hero):
     
 ##Specific Hero##
 def hero(player, hero,outcome):
-    soup, status = pagereq(f"hero/{hero}")
+    soup, status = pagereq(f"http://www.dota2protracker.com/hero/{requote_uri(hero)}")
     match_ids,avg_mmr, match_time, loutcome,pro_names = ([] for _ in range(5))
     if status == 200:
         table = soup.find(id="table_matches")
