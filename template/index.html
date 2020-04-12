@@ -79,7 +79,19 @@
           </div>
       </div>
       </form>
-      {% with messages = get_flashed_messages(with_categories=true) %}
+    {% with messages = get_flashed_messages(category_filter=["limited"]) %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+            {{ message }}
+            <button type="button" class="close text-black-50" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+      {% with messages = get_flashed_messages(with_categories=true, category_filter=["danger", "primary"]) %}
         {% if messages %}
           {% for category, message in messages %}
           <div class="alert alert-{{ category }} text-center" role="alert">

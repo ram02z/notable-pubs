@@ -1,14 +1,23 @@
 import requests
 from requests.utils import requote_uri
 from bs4 import BeautifulSoup, SoupStrainer
+import json
 #from selenium import webdriver
-
 
 def pagereq(url):
     response = requests.get(url)
     strainer = SoupStrainer('table')
     soup = BeautifulSoup(response.content, 'lxml', parse_only=strainer)
     return soup ,response.status_code
+
+def convID(hero):
+    with open('heroes.json','r') as heroes:
+        data = heroes.read()
+    obj = json.loads(data)
+    for i in obj:
+        for a, v in i.items():
+            if a == "localized_name" and v == hero:
+                return(i['id'])
 
 ##Pro player names##
 def peeps():
@@ -57,30 +66,39 @@ def spam():
         third_columns.append(row.findAll('td')[2].text)
     return third_columns
 
-##checks the laning tab in opendota
-def lane_old():
-    #checks whether the match has been parsed by opendota using a seperate function to...
-    #...verify if div that holds "needs parsing" message exists.
-    #hero name is stored in attribute data-for in the img tag
-    #lane is in the same tr between span tags where hero name was found
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--no-sandbox")
-    with webdriver.Chrome(executable_path="/Users/Omar/Documents/driver/chromedriver.exe", chrome_options=chrome_options) as driver:
-        driver.get("https://www.opendota.com/matches/5340488516/laning")
-        if driver.find_elements_by_css_selector('table'):
-            strainer = SoupStrainer('table')
-            soup = BeautifulSoup(driver.page_source, 'lxml', parse_only=strainer)
-            return soup.prettify()
-        else:
-            return False
-def lane2():
+# ##checks the laning tab in opendota
+# def lane_old():
+#     #checks whether the match has been parsed by opendota using a seperate function to...
+#     #...verify if div that holds "needs parsing" message exists.
+#     #hero name is stored in attribute data-for in the img tag
+#     #lane is in the same tr between span tags where hero name was found
+#     chrome_options = webdriver.ChromeOptions()
+#     chrome_options.add_argument("--headless")
+#     chrome_options.add_argument("--no-sandbox")
+#     with webdriver.Chrome(executable_path="/Users/Omar/Documents/driver/chromedriver.exe", chrome_options=chrome_options) as driver:
+#         driver.get("https://www.opendota.com/matches/5340488516/laning")
+#         if driver.find_elements_by_css_selector('table'):
+#             strainer = SoupStrainer('table')
+#             soup = BeautifulSoup(driver.page_source, 'lxml', parse_only=strainer)
+#             return soup.prettify()
+#         else:
+#             return False
+#
+#Lane check
+def lane():
+    limited = False
     response = requests.get("https://api.stratz.com/api/v1/match/5348683592/breakdown")
+    rheader = response.headers
     if response.status_code == 200:
-        data = response.json()['players']
-        for i in range(0,9):
-            if data[i]['heroId'] == 90:
-                print(i)
+        if int(rheader['X-RateLimit-Remaining-Hour']) > 0 and int(rheader['X-RateLimit-Remaining-Minute']) > 0 and int(rheader['X-RateLimit-Remaining-Second']) > 0:
+            data = response.json()['players']
+            for i in range(0,9):
+                if data[i]['heroId'] == 90:
+                    print(i)
+        else:
+            limited = True
+    else:
+        limited = True
     
 ##Specific Hero##
 def hero(player, hero,outcome):
@@ -112,9 +130,10 @@ def hero(player, hero,outcome):
 
 if __name__ == "__main__":
     #tests#
+    print(convID("Monkey King"))
     #import time
     #start_time = time.process_time()
-    lane2()
+    #lane()
     #print(hero(["Kuku"],"Mars","green"))
     #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
     #list_b = lowl()
