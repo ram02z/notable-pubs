@@ -51,6 +51,8 @@ def index():
     if request.method == "POST":
         hero = request.form.get("heroes")
         player = request.form.getlist("players")
+        role = request.form.get("role-radio", "")
+        matchup = request.form.get("matchup")
         A, B , C, D ,E = scraper.hero(player,hero,"green")
         F , G , H , I, J = scraper.hero(player, hero, "red")
         if len(player) == 1:
@@ -69,4 +71,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

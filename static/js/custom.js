@@ -2,6 +2,7 @@ $(document).ready(function() {
     $('#heroes, #players').change(function() {
         select1 = $('#heroes').val();
         select2 = $('#players').val();
+        select3 = $('#matchup').val();
         if (select1.length == 0 || select2.length == 0) {
             $('#submit').prop("disabled", !0)
         } else {
@@ -29,25 +30,22 @@ $(document).ready(function(){
         }
     });
 
-$('#reset').click(function(){
+$('#radio4').click(function(){
    $("#matchup").val('').trigger('change');
    $('#matchup-wrapper').collapse('hide');
-   $("[name=inline_radio]").prop("checked",false);
+   $("#radio1").prop("checked",false);
+   $("#radio2").prop("checked",false);
+   $("#radio3").prop("checked",false);
    $("#matchup").prop("disabled",true);
    $("#matchup").selectpicker('refresh');
 });
 
-$('[name="inline_radio"]').on('change', function() {
+$('.show-matchup').on('change', function() {
   $("#matchup").prop("disabled",false);
   $("#matchup").selectpicker('refresh');
   $("#matchup").val('').trigger('change');
-  if($(this).val() === "Mid"){
+  if($(this).val() === "Mid" || $(this).val() === "Off" || $(this).val() === "Safe"){
     $('#matchup-wrapper').collapse('show');
-    }else if($(this).val() === "Off") {
-    $('#matchup-wrapper').collapse('show')
-    }else if($(this).val() === "Safe") {
-    $('#matchup-wrapper').collapse('show')
-
   }
 });
 $(document).ready(function() {

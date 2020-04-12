@@ -40,7 +40,7 @@
             </select>
           </div>
             <div class="text-center text-md-left">
-              <button id="submit" value="submit" type="submit" class="btn btn-primary btn-block mt-4" disabled>Search</button>
+              <button name="submit_button" id="submit" value="submit" type="submit" class="btn btn-primary btn-block mt-4" disabled>Search</button>
               <button class="btn btn-primary btn-block mt-4 btn-sm" type="button" data-toggle="collapse" data-target="#collapse-options" aria-expanded="false" aria-controls="collapse-options">Refine
                 <span class="badge badge-light">beta</span>
               </button>
@@ -51,22 +51,21 @@
             <div id="lane-wrapper">
               <label class="d-block text-primary font-weight-bold" for="lane-wrapper">Lane :</label>
               <div class="custom-control custom-radio custom-control-inline">
-                <input value="Mid" type="radio" id="radio1" name="inline_radio" class="custom-control-input">
+                <input value="Any" type="radio" id="radio4" name="role-radio" class="custom-control-input" checked required>
+                <label class="custom-control-label" for="radio4">Any</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input value="Mid" type="radio" id="radio1" name="role-radio" class="custom-control-input show-matchup">
                 <label class="custom-control-label" for="radio1">Mid</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input value="Off" type="radio" id="radio2" name="inline_radio" class="custom-control-input">
+                <input value="Off" type="radio" id="radio2" name="role-radio" class="custom-control-input show-matchup">
                 <label class="custom-control-label" for="radio2">Off</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input value="Safe" type="radio" id="radio3" name="inline_radio" class="custom-control-input">
+                <input value="Safe" type="radio" id="radio3" name="role-radio" class="custom-control-input show-matchup" >
                 <label class="custom-control-label" for="radio3">Safe</label>
               </div>
-              <a id="reset" class="text-primary font-weight-bold" aria-label="Reset">
-                <svg class="bi bi-x-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-4.146-3.146a.5.5 0 00-.708-.708L8 7.293 4.854 4.146a.5.5 0 10-.708.708L7.293 8l-3.147 3.146a.5.5 0 00.708.708L8 8.707l3.146 3.147a.5.5 0 00.708-.708L8.707 8l3.147-3.146z" clip-rule="evenodd"/>
-                  </svg>
-              </a>
             </div>
             <br>
             <div class="collapse" id="matchup-wrapper">

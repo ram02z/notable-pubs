@@ -1,13 +1,14 @@
 import requests
 from requests.utils import requote_uri
 from bs4 import BeautifulSoup, SoupStrainer
+#from selenium import webdriver
+
 
 def pagereq(url):
     response = requests.get(url)
     strainer = SoupStrainer('table')
     soup = BeautifulSoup(response.content, 'lxml', parse_only=strainer)
     return soup ,response.status_code
-
 
 ##Pro player names##
 def peeps():
@@ -57,12 +58,29 @@ def spam():
     return third_columns
 
 ##checks the laning tab in opendota
-def lane(hero):
+def lane_old():
     #checks whether the match has been parsed by opendota using a seperate function to...
     #...verify if div that holds "needs parsing" message exists.
     #hero name is stored in attribute data-for in the img tag
     #lane is in the same tr between span tags where hero name was found
-    pass
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    with webdriver.Chrome(executable_path="/Users/Omar/Documents/driver/chromedriver.exe", chrome_options=chrome_options) as driver:
+        driver.get("https://www.opendota.com/matches/5340488516/laning")
+        if driver.find_elements_by_css_selector('table'):
+            strainer = SoupStrainer('table')
+            soup = BeautifulSoup(driver.page_source, 'lxml', parse_only=strainer)
+            return soup.prettify()
+        else:
+            return False
+def lane2():
+    response = requests.get("https://api.stratz.com/api/v1/match/5348683592/breakdown")
+    if response.status_code == 200:
+        data = response.json()['players']
+        for i in range(0,9):
+            if data[i]['heroId'] == 90:
+                print(i)
     
 ##Specific Hero##
 def hero(player, hero,outcome):
@@ -88,20 +106,22 @@ def hero(player, hero,outcome):
                         loutcome.append("win")
                     else:
                         loutcome.append("loss")
+                        
     #order of matches in list is new to old       
     return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1], pro_names[::-1]
 
 if __name__ == "__main__":
     #tests#
-    import time
-    start_time = time.process_time()
-    print(hero(["Kuku"],"Mars","green"))
-    print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
+    #import time
+    #start_time = time.process_time()
+    lane2()
+    #print(hero(["Kuku"],"Mars","green"))
+    #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
     #list_b = lowl()
     #print(len(list_b))
     #print(list_b)
     #merged = list(zip(list_a, list_b))
-    #merged = sorted(merged)
+    #merged = sorted(merged)hh
     #for i in merged:
     #    print(i[0])
     #A, B, C, D = hero("Taiga","Mars","green")

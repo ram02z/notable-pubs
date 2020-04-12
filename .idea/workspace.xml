@@ -4,6 +4,7 @@
     <list default="true" id="11c67ba7-8fea-4028-918f-7ea2829a35c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/custom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/index.html" afterDir="false" />
     </list>
@@ -39,9 +40,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/main.py" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.scraper">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python">
       <module name="dota replay" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -63,6 +64,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="scraper" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dota replay" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scraper.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.scraper" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -100,10 +127,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="479" y="217" width="1089" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586346214112">
+    <state x="479" y="217" width="1089" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586630892102">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state x="479" y="217" width="1089" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586346214112" />
+    <state x="479" y="217" width="1089" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586630892102" />
     <state x="788" y="365" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586451142304">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
@@ -116,26 +143,26 @@
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
     <state x="93" y="93" width="1862" height="936" key="DiffContextDialog/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586465046541" />
-    <state x="804" y="326" key="FileChooserDialogImpl" timestamp="1586465033456">
+    <state x="804" y="326" key="FileChooserDialogImpl" timestamp="1586628560644">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state x="804" y="326" key="FileChooserDialogImpl/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586465033456" />
-    <state width="2027" height="309" key="GridCell.Tab.0.bottom" timestamp="1586624053841">
+    <state x="804" y="326" key="FileChooserDialogImpl/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586628560644" />
+    <state width="2027" height="309" key="GridCell.Tab.0.bottom" timestamp="1586648454775">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state width="2027" height="309" key="GridCell.Tab.0.bottom/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586624053841" />
-    <state width="2027" height="309" key="GridCell.Tab.0.center" timestamp="1586624053841">
+    <state width="2027" height="309" key="GridCell.Tab.0.bottom/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586648454775" />
+    <state width="2027" height="309" key="GridCell.Tab.0.center" timestamp="1586648454774">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state width="2027" height="309" key="GridCell.Tab.0.center/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586624053841" />
-    <state width="2027" height="309" key="GridCell.Tab.0.left" timestamp="1586624053841">
+    <state width="2027" height="309" key="GridCell.Tab.0.center/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586648454774" />
+    <state width="2027" height="309" key="GridCell.Tab.0.left" timestamp="1586648454774">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state width="2027" height="309" key="GridCell.Tab.0.left/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586624053841" />
-    <state width="2027" height="309" key="GridCell.Tab.0.right" timestamp="1586624053841">
+    <state width="2027" height="309" key="GridCell.Tab.0.left/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586648454774" />
+    <state width="2027" height="309" key="GridCell.Tab.0.right" timestamp="1586648454774">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state width="2027" height="309" key="GridCell.Tab.0.right/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586624053841" />
+    <state width="2027" height="309" key="GridCell.Tab.0.right/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586648454774" />
     <state width="2027" height="380" key="GridCell.Tab.1.bottom" timestamp="1586396598629">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
@@ -152,10 +179,10 @@
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
     <state width="2027" height="380" key="GridCell.Tab.1.right/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586396598629" />
-    <state x="533" y="204" key="SettingsEditor" timestamp="1586345690641">
+    <state x="533" y="204" key="SettingsEditor" timestamp="1586648447710">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state x="533" y="204" key="SettingsEditor/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586345690641" />
+    <state x="533" y="204" key="SettingsEditor/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586648447710" />
     <state x="721" y="386" key="com.intellij.ide.util.TipDialog" timestamp="1586621710748">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
