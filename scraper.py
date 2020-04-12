@@ -11,13 +11,18 @@ def pagereq(url):
     return soup ,response.status_code
 
 def convID(hero):
+    if not isinstance(hero, list):
+        hero = [hero]
+    hoes = []
     with open('heroes.json','r') as heroes:
         data = heroes.read()
     obj = json.loads(data)
-    for i in obj:
-        for a, v in i.items():
-            if a == "localized_name" and v == hero:
-                return(i['id'])
+    for h in hero:
+        for i in obj:
+            for a, v in i.items():
+                if a == "localized_name" and v == h:
+                    hoes.append(i['id'])
+    return hoes
 
 ##Pro player names##
 def peeps():
@@ -90,10 +95,13 @@ def lane(id, hID,role, matchup):
     flag = False
     if role == "Mid":
         laneno = 2
+        xlane = 0
     if role == "Off":
         laneno = 3
+        xlane = 1
     if role == "Safe":
         laneno = 1
+        xlane = 3
     if matchup:
         h2ID = convID(matchup)
     response = requests.get(f"https://api.stratz.com/api/v1/match/{id}/breakdown")
@@ -102,11 +110,16 @@ def lane(id, hID,role, matchup):
         if int(rheader['X-RateLimit-Remaining-Hour']) > 0 and int(rheader['X-RateLimit-Remaining-Minute']) > 0 and int(rheader['X-RateLimit-Remaining-Second']) > 0:
             data = response.json()['players']
             if 'lane' in data[0]:
-                for i in range(0,9):
-                    if data[i]['heroId'] == hID and data[i]['lane'] == laneno:
-                        if matchup:
-                            for j in range(0,9):
-                                if data[j]['heroId'] == h2ID and data[j]['lane'] == laneno:
+                for i in range(0,10):
+                    if data[i]['heroId'] in hID and data[i]['lane'] == laneno:
+                        side = data[i]['isRadiant']
+                        if matchup and laneno == 2:
+                            for j in range(0,10):
+                                if data[j]['heroId'] in h2ID and data[j]['lane'] == laneno:
+                                    flag = True
+                        elif matchup and xlane:
+                            for k in range(0,10):
+                                if data[k]['heroId'] in h2ID and data[k]['lane'] == xlane and data[k]['isRadiant'] != side:
                                     flag = True
                         else:
                             flag = True
@@ -153,12 +166,13 @@ def hero(player, hero,outcome, role, matchup):
 
 if __name__ == "__main__":
     #tests#
-    #print(convID("Monkey King"))
+    print(convID(['Centaur Warrunner']))
     #import time
     #start_time = time.process_time()
     #lane()
-    print(hero(["QO"],"Tinker","red","Mid", "Monkey King"))
-    #print(hero(["Crit"],"Pangolier","green","Mid","Pugna"))
+    #print(hero(["Gorgc"],"Morphling","green","Safe", []))
+    #print(hero(["Crit"],"Pangolier","green","Mid",[]))
+    #print(hero(["Crit"], "Pangolier", "red", "Mid", []))
     #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
     #list_b = lowl()
     #print(len(list_b))

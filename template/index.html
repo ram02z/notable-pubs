@@ -24,7 +24,7 @@
         <div class="form-group col-md-6 text-center text-md-left">
           <div id="hero-wrapper">
             <label class= "text-primary font-weight-bold " for="heroes">Heroes : </label>
-            <select data-width="100%" class="selectpicker" data-live-search="true" name ="heroes" id="heroes" title="Select a hero" data-size="8" required>
+            <select data-width="100%" class="selectpicker" data-live-search="true" name ="heroes" id="heroes" title="Select a hero" data-size="8">
               {%for i in hero_names%}
               <option data-subtext="{{ i[1] }} picks" value="{{ i[0] }}">{{i[0]}}</option>
               {%endfor%}
@@ -41,9 +41,11 @@
           </div>
             <div class="text-center text-md-left">
               <button name="submit_button" id="submit" value="submit" type="submit" class="btn btn-primary btn-block mt-4" disabled>Search</button>
-              <button class="btn btn-primary btn-block mt-4 btn-sm" type="button" data-toggle="collapse" data-target="#collapse-options" aria-expanded="false" aria-controls="collapse-options">Refine
-                <span class="badge badge-light">beta</span>
-              </button>
+              <span {%if limit%} tabindex="0" rel="tooltip" data-placement="bottom" title="You have reached the limit for the hour!"{%endif%}>
+                <button {%if limit%} disabled style="pointer-events: none;" {%endif%} class="btn btn-primary btn-block mt-4 btn-sm" type="button" data-toggle="collapse" data-target="#collapse-options" aria-expanded="false" aria-controls="collapse-options">Refine
+                  <span class="badge badge-light">beta</span>
+                </button>
+                </span>
             </div>
         </div>
         <div class="collapse col-md-6 form-group" id="collapse-options">
@@ -59,18 +61,18 @@
                 <label class="custom-control-label" for="radio1">Mid</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input value="Off" type="radio" id="radio2" name="role-radio" class="custom-control-input show-matchup" disabled>
+                <input value="Off" type="radio" id="radio2" name="role-radio" class="custom-control-input show-matchup">
                 <label class="custom-control-label" for="radio2">Off</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input value="Safe" type="radio" id="radio3" name="role-radio" class="custom-control-input show-matchup" disabled>
+                <input value="Safe" type="radio" id="radio3" name="role-radio" class="custom-control-input show-matchup">
                 <label class="custom-control-label" for="radio3">Safe</label>
               </div>
             </div>
             <br>
             <div class="collapse" id="matchup-wrapper">
-              <label class="text-primary font-weight-bold mt-2" for="matchup">Hero matchup :</label>
-              <select data-width="100%" class="selectpicker" data-live-search="true" name="matchup" id="matchup" title="Select a hero" data-size="8" disabled>
+              <label class="text-primary font-weight-bold mt-2" for="matchup">Hero matchups :</label>
+              <select data-width="100%" class="selectpicker" data-live-search="true" name="matchup" id="matchup" title="Select a hero" data-size="8" multiple disabled>
                 {%for k in hero_names%}
                 <option value="{{ k[0] }}">{{k[0]}}</option>
                 {%endfor%}

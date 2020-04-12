@@ -35,9 +35,6 @@ $('#radio4').change(function(){
    $("#players").selectpicker('refresh');
    $("#matchup").val('').trigger('change');
    $('#matchup-wrapper').collapse('hide');
-   $("#radio1").prop("checked",false);
-   $("#radio2").prop("checked",false);
-   $("#radio3").prop("checked",false);
    $("#matchup").prop("disabled",true);
    $("#matchup").selectpicker('refresh');
 });

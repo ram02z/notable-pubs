@@ -1,3 +1,6 @@
+import sys
+
+import requests
 from flask import Flask, render_template, request, flash, Markup
 import scraper
 from natsort import humansorted
@@ -52,20 +55,27 @@ def index():
         hero = request.form.get("heroes")
         player = request.form.getlist("players")
         role = request.form.get("role-radio", "")
-        matchup = request.form.get("matchup")
+        matchup = request.form.getlist("matchup")
+        response = requests.get(f"https://api.stratz.com/api/v1/Language")
+        limitNO = 0
+        if response.status_code == 200:
+            limitNO = int(response.headers['X-RateLimit-Remaining-Hour'])
+            print(f'{limitNO} left this hour.', file=sys.stderr)
         if role != "Any":
             if len(player) != 0:
                 player = [f"{player[0]}"]
         A, B , C, D ,E , limited = scraper.hero(player,hero,"green", role, matchup)
         F , G , H , I, J , limited = scraper.hero(player, hero, "red", role, matchup)
         if limited:
-            message = Markup("<strong>Missing potential results</strong> The Stratz API request limit has been reached. Please try again later.")
+            message = Markup("<strong>Missing potential results</strong> The Stratz API request limit has been reached. Please wait before reattempting query.")
             flash(message, 'limited')
         extra = ""
         if role != "Any":
             extra = f"(playing on {role.lower()} lane)."
             if matchup:
-                extra = f"(playing on {role.lower()} lane versus {matchup})."
+                extra = f"(playing on {role.lower()} lane versus {matchup[0]})."
+                if len(matchup) > 1:
+                    extra = f"playing on {role.lower()} lane versus selected matchups."
         if len(player) == 1:
             player = f"<strong>{player[0]}</strong>"
         else:
@@ -80,7 +90,9 @@ def index():
             message = Markup(f"Showing match-ids from {player} for <strong>{hero}</strong>; <em>{extra}</em> <br>Win Percentage: <strong>{percent(A,F)}</strong>, "
                              f"Average duration: <strong>{duration(C,H)}</strong>, Average MMR: <strong>{average_mmr(B,G)}</strong>.")
             flash(message, 'primary')
-    return render_template("index.html", player_names = player_names, hero_names= hero_names, result = allmatches)
+        if limitNO == 0:
+            return render_template("index.html", player_names=player_names, hero_names=hero_names, result=allmatches, limit = True)
+    return render_template("index.html", player_names = player_names, hero_names= hero_names, result = allmatches, limit= False)
 
 
 
