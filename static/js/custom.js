@@ -56,3 +56,7 @@ $('.show-matchup').on('change', function() {
 $(document).ready(function() {
     $("[rel='tooltip'], .tooltip").tooltip();
 });
+
+$(document).on('change', '.selectpicker', function () {
+    $('.selectpicker').selectpicker('refresh');
+});
