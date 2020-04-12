@@ -30,7 +30,9 @@ $(document).ready(function(){
         }
     });
 
-$('#radio4').click(function(){
+$('#radio4').change(function(){
+   $('#players').attr('multiple','multiple');
+   $("#players").selectpicker('refresh');
    $("#matchup").val('').trigger('change');
    $('#matchup-wrapper').collapse('hide');
    $("#radio1").prop("checked",false);
@@ -43,6 +45,9 @@ $('#radio4').click(function(){
 $('.show-matchup').on('change', function() {
   $("#matchup").prop("disabled",false);
   $("#matchup").selectpicker('refresh');
+  $('#players').removeAttr('multiple');
+  index = $('#players').prop('selectedIndex');
+  $('#players option')[index].selected = true;
   $("#matchup").val('').trigger('change');
   if($(this).val() === "Mid" || $(this).val() === "Off" || $(this).val() === "Safe"){
     $('#matchup-wrapper').collapse('show');

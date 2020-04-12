@@ -53,24 +53,31 @@ def index():
         player = request.form.getlist("players")
         role = request.form.get("role-radio", "")
         matchup = request.form.get("matchup")
-        A, B , C, D ,E = scraper.hero(player,hero,"green")
-        F , G , H , I, J = scraper.hero(player, hero, "red")
-        limited = False
+        if role != "Any":
+            if len(player) != 0:
+                player = [f"{player[0]}"]
+        A, B , C, D ,E , limited = scraper.hero(player,hero,"green", role, matchup)
+        F , G , H , I, J , limited = scraper.hero(player, hero, "red", role, matchup)
         if limited:
             message = Markup("<strong>Missing potential results</strong> The Stratz API request limit has been reached. Please try again later.")
             flash(message, 'limited')
+        extra = ""
+        if role != "Any":
+            extra = f"(playing on {role.lower()} lane)."
+            if matchup:
+                extra = f"(playing on {role.lower()} lane versus {matchup})."
         if len(player) == 1:
             player = f"<strong>{player[0]}</strong>"
         else:
             player = "selected players"
-        if len(A) == 0 and len(E) == 0:
-            message = Markup(f"No matches from <strong>{player}</strong> found for <strong>{hero}</strong>. <small>(Please note only matches from the past 8 days are queried)</small>")
+        if len(A) == 0 and len(F) == 0:
+            message = Markup(f"No matches from <strong>{player}</strong> found for <strong>{hero}</strong> <em>{extra}</em><small> <br> Please note only matches from the past 8 days are queried</small>")
             flash(message, 'danger')
         else:
             res1 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr, 'name': pn} for key, mmr, dur, wol, pn in zip(A, B , C, D ,E)}
             res2 = {key: {'outcome': wol, 'duration': dur, 'avgmmr': mmr, 'name': pn} for key, mmr, dur, wol, pn in zip(F , G , H , I, J)}
             allmatches = {**res1, **res2}
-            message = Markup(f"Showing match-ids from {player} for <strong>{hero}</strong>. Win Percentage: <strong>{percent(A,F)}</strong>, "
+            message = Markup(f"Showing match-ids from {player} for <strong>{hero}</strong>; <em>{extra}</em> <br>Win Percentage: <strong>{percent(A,F)}</strong>, "
                              f"Average duration: <strong>{duration(C,H)}</strong>, Average MMR: <strong>{average_mmr(B,G)}</strong>.")
             flash(message, 'primary')
     return render_template("index.html", player_names = player_names, hero_names= hero_names, result = allmatches)
@@ -78,4 +85,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

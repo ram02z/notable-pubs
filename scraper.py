@@ -85,23 +85,41 @@ def spam():
 #             return False
 #
 #Lane check
-def lane():
+def lane(id, hID,role, matchup):
     limited = False
-    response = requests.get("https://api.stratz.com/api/v1/match/5348683592/breakdown")
+    flag = False
+    if role == "Mid":
+        laneno = 2
+    if role == "Off":
+        laneno = 3
+    if role == "Safe":
+        laneno = 1
+    if matchup:
+        h2ID = convID(matchup)
+    response = requests.get(f"https://api.stratz.com/api/v1/match/{id}/breakdown")
     rheader = response.headers
     if response.status_code == 200:
         if int(rheader['X-RateLimit-Remaining-Hour']) > 0 and int(rheader['X-RateLimit-Remaining-Minute']) > 0 and int(rheader['X-RateLimit-Remaining-Second']) > 0:
             data = response.json()['players']
-            for i in range(0,9):
-                if data[i]['heroId'] == 90:
-                    print(i)
+            if 'lane' in data[0]:
+                for i in range(0,9):
+                    if data[i]['heroId'] == hID and data[i]['lane'] == laneno:
+                        if matchup:
+                            for j in range(0,9):
+                                if data[j]['heroId'] == h2ID and data[j]['lane'] == laneno:
+                                    flag = True
+                        else:
+                            flag = True
         else:
             limited = True
     else:
         limited = True
+    return flag, limited
     
 ##Specific Hero##
-def hero(player, hero,outcome):
+def hero(player, hero,outcome, role, matchup):
+    hID = convID(hero)
+    limited = False
     soup, status = pagereq(f"http://www.dota2protracker.com/hero/{requote_uri(hero)}")
     match_ids,avg_mmr, match_time, loutcome,pro_names = ([] for _ in range(5))
     if status == 200:
@@ -112,29 +130,35 @@ def hero(player, hero,outcome):
             l = tds[1].find("a")
             for i in player:
                 if l.attrs['href'] == f"/player/{i}" and row.find("img", class_=f"{outcome}"):
-                    if not len(player) == 1:
-                        pro_names.append(i)
-                    else:
-                        pro_names.append("0")
-                    match_time.append(tds[7].text)
-                    avg_mmr.append(tds[4].text)
                     links = row.find("a", class_="info")
-                    match_ids.append(''.join(filter(str.isdigit, links.attrs['href'])))
-                    if outcome == "green":
-                        loutcome.append("win")
-                    else:
-                        loutcome.append("loss")
+                    mID = ''.join(filter(str.isdigit, links.attrs['href']))
+                    flag = True
+                    if not role == "Any":
+                        flag , limited = lane(mID,hID,role, matchup)
+                    if flag == True and limited == False:
+                        if not len(player) == 1:
+                            pro_names.append(i)
+                        else:
+                            pro_names.append("0")
+                        match_time.append(tds[7].text)
+                        avg_mmr.append(tds[4].text)
+                        match_ids.append(mID)
+                        if outcome == "green":
+                            loutcome.append("win")
+                        else:
+                            loutcome.append("loss")
                         
     #order of matches in list is new to old       
-    return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1], pro_names[::-1]
+    return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1], pro_names[::-1], limited
 
 if __name__ == "__main__":
     #tests#
-    print(convID("Monkey King"))
+    #print(convID("Monkey King"))
     #import time
     #start_time = time.process_time()
     #lane()
-    #print(hero(["Kuku"],"Mars","green"))
+    print(hero(["QO"],"Tinker","red","Mid", "Monkey King"))
+    #print(hero(["Crit"],"Pangolier","green","Mid","Pugna"))
     #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
     #list_b = lowl()
     #print(len(list_b))
@@ -143,7 +167,7 @@ if __name__ == "__main__":
     #merged = sorted(merged)hh
     #for i in merged:
     #    print(i[0])
-    #A, B, C, D = hero("Taiga","Mars","green")
+    #A, B, C, D , E= hero("Taiga","Mars","green")
     #E, F, G, H = hero("Taiga","Mars","red")
     #times = C + G
     #print(times)

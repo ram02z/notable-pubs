@@ -33,7 +33,7 @@
           <br>
           <div id="player-wrapper">
             <label class="text-primary font-weight-bold" for="players">Players :</label>
-            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" required multiple data-actions-box="true">
+            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" required multiple>
               {%for j in player_names%}
               <option data-subtext="{{ j[1] }} games" value="{{ j[0] }}">{{j[0]}}</option>
               {%endfor%}
@@ -59,11 +59,11 @@
                 <label class="custom-control-label" for="radio1">Mid</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input value="Off" type="radio" id="radio2" name="role-radio" class="custom-control-input show-matchup">
+                <input value="Off" type="radio" id="radio2" name="role-radio" class="custom-control-input show-matchup" disabled>
                 <label class="custom-control-label" for="radio2">Off</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input value="Safe" type="radio" id="radio3" name="role-radio" class="custom-control-input show-matchup" >
+                <input value="Safe" type="radio" id="radio3" name="role-radio" class="custom-control-input show-matchup" disabled>
                 <label class="custom-control-label" for="radio3">Safe</label>
               </div>
             </div>
@@ -142,10 +142,17 @@
             </button>
           </div>
           <div class="modal-body">
-            <p><b>Notable Pubs</b> is a web-app made to scrape the relevant data straight from <a href="http://dota2protracker.com" class="text-decoration-none" target="_blank">dota2protracker.com</a>, meaning no API calls are made by this web-app directly.</p>
+            <p><b>Notable Pubs</b> is a web-app made to scrape the relevant data straight from <a href="http://dota2protracker.com" class="text-decoration-none" target="_blank">dota2protracker.com</a>
+              <s> meaning no API calls are made by this web-app directly.</s> API calls are now made to
+              <a href="https://stratz.com/" class="text-decoration-none" target="_blank">STRATZ.com</a> to check against the refine options if you have used any.
+              As API calls are limited, the player select will not allow for multiple selection. Otherwise, the query should run accurately as long as STRATZ has analysed the replay.
+              Additionally, the current algorithm used is slow so don't worry if your query is taking time.
+            </p>
             <p>Player data is limited based on their activity(players with <10 matches in the past 8 days are not listed in the dropdown).</p>
             <p>Table rows are colored based on the outcome of the respective match.(green for win and red for loss)</p>
             <p>In order to check the player name when a query had multiple players, hover over the matchid.</p>
+            <p><small>If you run across any errors that have not been handled correctly, please message me at
+              <a href="discord://" class="text-decoration-none" target="_blank">@ram02#1825</a> or on my twitter linked below.</small></p>
           </div>
           <div class="modal-footer justify-content-center bg-primary text-light">
             <p>Made with <span class="love">♥</span> by <a class="twitter text-decoration-none" href="https://twitter.com/ram02z" target="_blank">@ram02z</a></p>
@@ -156,7 +163,7 @@
   <footer class="text-center footer text-light fixed-bottom bg-primary">
     <small>DOTA 2 is a registered trademark of Valve Corporation.</small>
   </footer>
-    <script type="text/javascript" src="js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/bootstrap-select.min.js"></script>
