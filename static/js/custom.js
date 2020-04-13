@@ -21,13 +21,13 @@ function _x(STR_XPATH) {
     return xnodes;
 }
 function loading(){
-    $("#loading").show();
-    $(".alert").hide();
-    $("#winloss").hide();
-    $("#select-form").hide();
-    $("#winloss_length").hide();
-    $("#winloss_paginate").hide();
-    $("#winloss_info").hide();
+    $('#content').fadeOut();
+    $('#content').hide();
+    $('#loading').css('opacity', 0)
+    $('#loading').show();
+    $('#loading').animate(
+        { opacity: 1 },
+        { queue: false, duration: 400 });
 }
 $(document).ready(function() {
     var table = $('#winloss').DataTable({

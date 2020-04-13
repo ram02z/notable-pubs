@@ -18,7 +18,13 @@
     </a>
     <h2 class="m-0 align-middle center-x"><span class="badge badge-primary align-middle">NOTABLE PUBS</span></h2>
   </nav>
-  <div class="container-md">
+  <div id="loading" class="text-primary">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  </div>
+  <div id="content" style="display: none;" class="container-md">
       {% if hero_names and player_names%}
       <form id= "select-form" class="row justify-content-center align-items-center mt-2" method="post">
         <div class="form-group col-md-6 text-center text-md-left">
@@ -102,12 +108,6 @@
           {%endfor %}
         {% endif %}
       {% endwith %}
-      <div class="text-primary">
-        <div style="display:none;" id="loading" class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
-        </div
-      </div>
-    </div>
       <table id="winloss" class="table table-bordered table-hover">
         <thead class="thead-light">
           <tr>
@@ -178,5 +178,16 @@
     <script type="text/javascript" src="js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="js/datatables.min.js"></script>
     <script type="text/javascript" src="js/custom.js"></script>
+    <script>
+       $(window).on('load', function () {
+        $('#loading').hide();
+        $('#content').css('opacity', 0)
+        $('#content').show();
+        $('#content').slideDown(400)
+        $('#content').animate(
+            { opacity: 1 },
+            { queue: false, duration: 400 });
+    });
+    </script>
   </body>
 </html>
