@@ -1,27 +1,29 @@
 import requests
-from requests.utils import requote_uri
-from bs4 import BeautifulSoup, SoupStrainer
-import json
 #from selenium import webdriver
 
 def pagereq(url):
     response = requests.get(url)
+    from bs4 import BeautifulSoup, SoupStrainer
     strainer = SoupStrainer('table')
     soup = BeautifulSoup(response.content, 'lxml', parse_only=strainer)
     return soup ,response.status_code
 
 def convID(hero):
+    #checks if parameter is a string so the "for h in hero" statement works
     if not isinstance(hero, list):
         hero = [hero]
     hoes = []
     with open('heroes.json','r') as heroes:
         data = heroes.read()
-    obj = json.loads(data)
+    from json import loads
+    obj = loads(data)
     for h in hero:
         for i in obj:
             for a, v in i.items():
                 if a == "localized_name" and v == h:
-                    hoes.append(i['id'])
+                    hID = i['id']
+                    append = hoes.append
+                    append(hID)
     return hoes
 
 ##Pro player names##
@@ -34,7 +36,9 @@ def peeps():
         for row in rows[1:]:
             td = (row.findAll('td')[0])
             l = td.find("a")
-            players.append(l.attrs['title'])
+            p = l.attrs['title']
+            append = players.append
+            append(p)
     return players
 
 ##Hero names##
@@ -47,7 +51,9 @@ def heroes():
         for row in rows[1:]:
             td = (row.findAll('td')[1])
             l = td.find("a")
-            ids.append(l.attrs['title'])
+            h = l.attrs['title']
+            append = ids.append
+            append(h)
     return ids
 
 ##Player match record##
@@ -58,7 +64,8 @@ def lowl():
     rows = table_id.findAll('tr')
     second_columns = []
     for row in rows[1:]:
-        second_columns.append(row.findAll('td')[1].text)
+        r = row.findAll('td')[1].text
+        second_columns.append(r)
     return second_columns
 ##Amount each hero is played##
 def spam():
@@ -68,7 +75,8 @@ def spam():
     rows = table_id.findAll('tr')
     third_columns = []
     for row in rows[1:]:
-        third_columns.append(row.findAll('td')[2].text)
+        p = row.findAll('td')[2].text
+        third_columns.append(p)
     return third_columns
 
 # ##checks the laning tab in opendota
@@ -80,7 +88,7 @@ def spam():
 #     chrome_options = webdriver.ChromeOptions()
 #     chrome_options.add_argument("--headless")
 #     chrome_options.add_argument("--no-sandbox")
-#     with webdriver.Chrome(executable_path="/Users/Omar/Documents/driver/chromedriver.exe", chrome_options=chrome_options) as driver:
+#     with webdriver.Chrome(executable_path="/Users/#/Documents/driver/chromedriver.exe", chrome_options=chrome_options) as driver:
 #         driver.get("https://www.opendota.com/matches/5340488516/laning")
 #         if driver.find_elements_by_css_selector('table'):
 #             strainer = SoupStrainer('table')
@@ -90,21 +98,16 @@ def spam():
 #             return False
 #
 #Lane check
-def lane(id, hID,role, matchup):
-    limited = False
-    flag = False
+def lane(mID, hID,role, matchup):
+    # flag is used to track if match was found and limited is used to check if API requests fails
+    limited, flag = False, False
     if role == "Mid":
-        laneno = 2
-        xlane = 0
+        laneno , xlane = 2, 0#mid and nolane
     if role == "Off":
-        laneno = 3
-        xlane = 1
+        laneno, xlane = 3 , 1#offlane and safe lane
     if role == "Safe":
-        laneno = 1
-        xlane = 3
-    if matchup:
-        h2ID = convID(matchup)
-    response = requests.get(f"https://api.stratz.com/api/v1/match/{id}/breakdown")
+        laneno ,xlane = 1 ,3#safe lane and offlane
+    response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown")
     rheader = response.headers
     if response.status_code == 200:
         if int(rheader['X-RateLimit-Remaining-Hour']) > 0 and int(rheader['X-RateLimit-Remaining-Minute']) > 0 and int(rheader['X-RateLimit-Remaining-Second']) > 0:
@@ -112,17 +115,20 @@ def lane(id, hID,role, matchup):
             if 'lane' in data[0]:
                 for i in range(0,10):
                     if data[i]['heroId'] in hID and data[i]['lane'] == laneno:
-                        side = data[i]['isRadiant']
-                        if matchup and laneno == 2:
-                            for j in range(0,10):
-                                if data[j]['heroId'] in h2ID and data[j]['lane'] == laneno:
-                                    flag = True
-                        elif matchup and xlane:
-                            for k in range(0,10):
-                                if data[k]['heroId'] in h2ID and data[k]['lane'] == xlane and data[k]['isRadiant'] != side:
-                                    flag = True
-                        else:
+                        if not matchup:
                             flag = True
+                        elif matchup:
+                            h2ID = convID(matchup)
+                            if laneno == 2:
+                                for j in range(0,10):
+                                    if data[j]['heroId'] in h2ID and data[j]['lane'] == laneno:
+                                        flag = True
+                            elif xlane:
+                                side = data[i]['isRadiant']
+                                for k in range(0,10):
+                                    if data[k]['heroId'] in h2ID and data[k]['lane'] == xlane and data[k]['isRadiant'] != side:
+                                        flag = True
+
         else:
             limited = True
     else:
@@ -133,12 +139,15 @@ def lane(id, hID,role, matchup):
 def hero(player, hero,outcome, role, matchup):
     hID = convID(hero)
     limited = False
+    from requests.utils import requote_uri
     soup, status = pagereq(f"http://www.dota2protracker.com/hero/{requote_uri(hero)}")
     match_ids,avg_mmr, match_time, loutcome,pro_names = ([] for _ in range(5))
     if status == 200:
         table = soup.find(id="table_matches")
         rows = table.findAll('tr')
         for row in rows[1:]:
+            if limited:
+                break
             tds = (row.findAll('td'))
             l = tds[1].find("a")
             for i in player:
@@ -170,13 +179,11 @@ if __name__ == "__main__":
     #import time
     #start_time = time.process_time()
     #lane()
-    #print(hero(["Gorgc"],"Morphling","green","Safe", []))
     #print(hero(["Crit"],"Pangolier","green","Mid",[]))
     #print(hero(["Crit"], "Pangolier", "red", "Mid", []))
     #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
     #list_b = lowl()
     #print(len(list_b))
-    #print(list_b)
     #merged = list(zip(list_a, list_b))
     #merged = sorted(merged)hh
     #for i in merged:

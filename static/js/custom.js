@@ -48,7 +48,7 @@ $('#radio4').change(function(){
    var lenplayers = $('#players > option').length;
    $('#players').data('max-options', lenplayers).selectpicker('refresh');;
    $("#matchup").val('').trigger('change').selectpicker('refresh');
-   $(_x('/html/body/div[1]/form/div[1]/div[2]/div/div/div[2]/div/button[1]')).prop('disabled', false);
+   $(_x('/html/body/div[2]/form/div[1]/div[2]/div/div/div[2]/div/button[1]')).prop('disabled', false);
    $("#players").selectpicker('refresh');
    $('#matchup-wrapper').collapse('hide');
    $("#matchup").prop("disabled",true).selectpicker('refresh');
@@ -56,7 +56,7 @@ $('#radio4').change(function(){
 
 $('.show-matchup').on('change', function() {
   $("#matchup").prop("disabled",false).selectpicker('refresh');
-  $(_x('/html/body/div[1]/form/div[1]/div[2]/div/div/div[2]/div/button[1]')).prop('disabled', true);
+  $(_x('/html/body/div[2]/form/div[1]/div[2]/div/div/div[2]/div/button[1]')).prop('disabled', true);
   $("#players").selectpicker('refresh');
   $('#players').data('max-options', 3).selectpicker('refresh');
   var data=[];

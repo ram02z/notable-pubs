@@ -1,4 +1,3 @@
-import sys
 import requests
 from flask import Flask, render_template, request, flash, Markup
 import scraper
@@ -59,6 +58,7 @@ def index():
         limitNO = 0
         if response.status_code == 200:
             limitNO = int(response.headers['X-RateLimit-Remaining-Hour'])
+            import sys
             print(f'{limitNO} left this hour.', file=sys.stderr)
         if role != "Any":
             if len(player) > 3:
