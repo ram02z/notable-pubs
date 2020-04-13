@@ -1,5 +1,4 @@
 import sys
-
 import requests
 from flask import Flask, render_template, request, flash, Markup
 import scraper

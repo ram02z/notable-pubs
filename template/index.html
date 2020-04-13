@@ -33,14 +33,14 @@
           <br>
           <div id="player-wrapper">
             <label class="text-primary font-weight-bold" for="players">Players :</label>
-            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" required multiple data-max-options="{{player_names|length}}">
+            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" required multiple data-actions-box="true" data-max-options="{{player_names|length}}">
               {%for j in player_names%}
               <option data-subtext="{{ j[1] }} games" value="{{ j[0] }}">{{j[0]}}</option>
               {%endfor%}
             </select>
           </div>
             <div class="text-center text-md-left">
-              <button name="submit_button" id="submit" value="submit" type="submit" class="btn btn-primary btn-block mt-4" disabled>Search</button>
+              <button onclick="loading();" name="submit_button" id="submit" value="submit" type="submit" class="btn btn-primary btn-block mt-4" disabled>Search</button>
               <span {%if limit%} tabindex="0" rel="tooltip" data-placement="bottom" title="You have reached the limit for the hour!"{%endif%}>
                 <button {%if limit%} disabled style="pointer-events: none;" {%endif%} class="btn btn-primary btn-block mt-4 btn-sm" type="button" data-toggle="collapse" data-target="#collapse-options" aria-expanded="false" aria-controls="collapse-options">Refine
                   <span class="badge badge-light">beta</span>
@@ -102,6 +102,12 @@
           {%endfor %}
         {% endif %}
       {% endwith %}
+      <div class="text-primary">
+        <div style="display:none;" id="loading" class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div
+      </div>
+    </div>
       <table id="winloss" class="table table-bordered table-hover">
         <thead class="thead-light">
           <tr>
@@ -114,7 +120,7 @@
         {% if result %}
           {% for k, parent in result.items() %}
               <tr {%if parent['outcome'] == 'win' %} class= "table-success"{% endif %}{%if parent['outcome'] == 'loss'%} class ="table-danger"{%endif%}>
-                <td ><span {%if parent['name'] != "0"%} rel="tooltip" data-placement="right" title="{{ parent['name'] }}"{% endif %}>{{k}}</span></td>
+                <td ><span {%if parent['name'] != "0"%} id="player-tip" rel="tooltip" data-placement="right" title="{{ parent['name'] }}"{% endif %}>{{k}}</span></td>
                 <td>{{parent['avgmmr']}}</td>
                 <td>{{parent['duration']}}</td>
               </tr>
