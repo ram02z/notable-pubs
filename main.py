@@ -62,8 +62,8 @@ def index():
             limitNO = int(response.headers['X-RateLimit-Remaining-Hour'])
             print(f'{limitNO} left this hour.', file=sys.stderr)
         if role != "Any":
-            if len(player) != 0:
-                player = [f"{player[0]}"]
+            if len(player) > 3:
+                player = [f"{player[0]}",f"{player[1]}",f"{player[2]}"]
         A, B , C, D ,E , limited = scraper.hero(player,hero,"green", role, matchup)
         F , G , H , I, J , limited = scraper.hero(player, hero, "red", role, matchup)
         if limited:

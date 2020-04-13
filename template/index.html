@@ -33,7 +33,7 @@
           <br>
           <div id="player-wrapper">
             <label class="text-primary font-weight-bold" for="players">Players :</label>
-            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" required multiple>
+            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" required multiple data-max-options="{{player_names|length}}">
               {%for j in player_names%}
               <option data-subtext="{{ j[1] }} games" value="{{ j[0] }}">{{j[0]}}</option>
               {%endfor%}
@@ -72,7 +72,7 @@
             <br>
             <div class="collapse" id="matchup-wrapper">
               <label class="text-primary font-weight-bold mt-2" for="matchup">Hero matchups :</label>
-              <select data-width="100%" class="selectpicker" data-live-search="true" name="matchup" id="matchup" title="Select a hero" data-size="8" multiple disabled>
+              <select data-width="100%" class="selectpicker" data-live-search="true" name="matchup" id="matchup" title="Select a hero" data-size="8" multiple disabled data-actions-box="true">
                 {%for k in hero_names%}
                 <option value="{{ k[0] }}">{{k[0]}}</option>
                 {%endfor%}
@@ -147,7 +147,7 @@
             <p><b>Notable Pubs</b> is a web-app made to scrape the relevant data straight from <a href="http://dota2protracker.com" class="text-decoration-none" target="_blank">dota2protracker.com</a>
               <s> meaning no API requests are made by this web-app directly.</s> API requests are now made to
               <a href="https://stratz.com/" class="text-decoration-none" target="_blank">STRATZ.com</a> to check against the refine options if you have used any.
-              As API requests are limited by volume and time, the player select will not allow for multiple selection. Otherwise, the query should run accurately as long as STRATZ has analysed the replay.
+              As API requests are limited by volume and time, the player select will only allow for <strong>3</strong> selections. Otherwise, the query should run accurately as long as STRATZ has analysed the replay.
               Additionally, the current algorithm used is not very effecient so don't worry if your query is taking time to process.
             </p>
             <p>Player data is limited based on their activity(players with <10 matches in the past 8 days are not listed in the dropdown).</p>

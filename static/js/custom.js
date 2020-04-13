@@ -31,21 +31,24 @@ $(document).ready(function(){
     });
 
 $('#radio4').change(function(){
-   $('#players').attr('multiple','multiple');
-   $("#players").selectpicker('refresh');
-   $("#matchup").val('').trigger('change');
+   var lenplayers = $('#players > option').length;
+   $('#players').data('max-options', lenplayers).selectpicker('refresh');;
+   $("#matchup").val('').trigger('change').selectpicker('refresh');
    $('#matchup-wrapper').collapse('hide');
-   $("#matchup").prop("disabled",true);
-   $("#matchup").selectpicker('refresh');
+   $("#matchup").prop("disabled",true).selectpicker('refresh');
 });
 
 $('.show-matchup').on('change', function() {
-  $("#matchup").prop("disabled",false);
-  $("#matchup").selectpicker('refresh');
-  $('#players').removeAttr('multiple');
-  index = $('#players').prop('selectedIndex');
-  $('#players option')[index].selected = true;
-  $("#matchup").val('').trigger('change');
+  $("#matchup").prop("disabled",false).selectpicker('refresh');
+  $('#players').data('max-options', 3).selectpicker('refresh');
+  var data=[];
+  var $el=$("#players");
+  $el.find('option:selected').each(function(){
+    data.push($(this).val());
+   });
+  var handicap = data.slice(0,3)
+  $('#players').val(handicap).selectpicker('render');
+  $("#matchup").val('').trigger('change').selectpicker('refresh');
   if($(this).val() === "Mid" || $(this).val() === "Off" || $(this).val() === "Safe"){
     $('#matchup-wrapper').collapse('show');
   }
@@ -54,6 +57,3 @@ $(document).ready(function() {
     $("[rel='tooltip'], .tooltip").tooltip();
 });
 
-$(document).on('change', '.selectpicker', function () {
-    $('.selectpicker').selectpicker('refresh');
-});
