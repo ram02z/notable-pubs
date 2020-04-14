@@ -1,6 +1,15 @@
 body {
     padding-bottom: 70px
 }
+#match-id, #match-id:focus, #match-id:active {
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+#match-id:hover{
+    opacity: 0.5;
+}
 .spinner-border {
   position: fixed;
   z-index: 9999;
@@ -19,28 +28,33 @@ body {
 
 .close {
     color: #fff;
-    opacity: 1
+    opacity: 1;
+    transition: 0.3s;
 }
 
 .close:hover {
     color: #fff;
-    opacity: .5
+    opacity: .5;
 }
 
-.twitter,
-.twitter:active,
-.twitter:visited {
-    color: white
+.lighta,
+.lighta:active,
+.lighta:visited {
+    color: white;
+    transition: 0.3s;
 }
 
-.twitter:hover {
-    color: #d7ecf2
+.lighta:hover {
+    color: #d7ecf2;
 }
-
+a svg{
+    fill: rgba(2, 117, 216, 1);
+    transition: 0.3s;
+}
 a svg:hover,
 a svg:active,
 a svg:focus {
-    fill: rgba(2, 117, 216, .9);
+    fill: rgba(2, 117, 216, 0.9);
     cursor: pointer
 }
 

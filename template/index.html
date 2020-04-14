@@ -120,7 +120,9 @@
         {% if result %}
           {% for k, parent in result.items() %}
               <tr {%if parent['outcome'] == 'win' %} class= "table-success"{% endif %}{%if parent['outcome'] == 'loss'%} class ="table-danger"{%endif%}>
-                <td ><span {%if parent['name'] != "0"%} id="player-tip" rel="tooltip" data-placement="right" title="{{ parent['name'] }}"{% endif %}>{{k}}</span></td>
+                <td>
+                  <input size="{{k|length}}" id="match-id" style="cursor:pointer" type="text" readonly="readonly" value="{{k}}" {%if parent['name'] != "0"%} id="player-tip" rel="tooltip" data-placement="right" title="{{ parent['name'] }}"{% endif %}>
+                </td>
                 <td>{{parent['avgmmr']}}</td>
                 <td>{{parent['duration']}}</td>
               </tr>
@@ -154,17 +156,17 @@
               <s> meaning no API requests are made by this web-app directly.</s> API requests are now made to
               <a href="https://stratz.com/" class="text-decoration-none" target="_blank">STRATZ.com</a> to check against the refine options if you have used any.
               As API requests are limited by volume and time, the player select will only allow for <strong>3</strong> selections. Otherwise, the query should run accurately as long as STRATZ has analysed the replay.
-              Additionally, the current algorithm used is not very effecient so don't worry if your query is taking time to process.
             </p>
             <p>Player data is limited based on their activity(players with <10 matches in the past 8 days are not listed in the dropdown).</p>
             <p>Table rows are colored based on the outcome of the respective match.(green for win and red for loss)</p>
             <p>In order to check the player name when a query had multiple players, hover over the matchid.</p>
+            <p>In order to copy match id, click once on the match id and it will be transferred onto your clipboard.</p>
             <p>When the API rate limit is reached for the hour, the refine functionality will be temporarily disabled.</p>
             <p><small>If you run across any errors that have not been handled correctly, please message me at
               <a href="discord://" class="text-decoration-none" target="_blank">@ram02#1825</a> or on my twitter linked below.</small></p>
           </div>
           <div class="modal-footer justify-content-center bg-primary text-light">
-            <p>Made with <span class="love">♥</span> by <a class="twitter text-decoration-none" href="https://twitter.com/ram02z" target="_blank">@ram02z</a></p>
+            <p>Made with <span class="love">♥</span> by <a class="lighta text-decoration-none" href="https://twitter.com/ram02z" target="_blank">@ram02z</a></p>
           </div>
         </div>
       </div>

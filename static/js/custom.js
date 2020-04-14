@@ -73,12 +73,29 @@ $('.show-matchup').on('change', function() {
 });
 
 $(document).ready(function() {
-    $("[rel='tooltip'], .tooltip").tooltip();
-    $('#winloss tbody').on('mouseover', 'tr', function () {
+  $("[rel='tooltip'], .tooltip").tooltip();
+  $('#winloss tbody').on('mouseover', 'tr', function() {
     $('[rel="tooltip"]').tooltip({
-        trigger: 'hover',
-        html: true
+      trigger: 'hover',
+      html: true
     });
-});
+  });
 });
 
+
+$('td').on('click','input',function() {
+   $('.tooltip').tooltip('hide');
+   $(this).select();
+   document.execCommand('copy');
+   var inp = $(this);
+   var temp = $(this).val();
+   $(this).val("Copied!");
+   $(this).delay(800).fadeOut().fadeIn();
+   setTimeout(function() {
+        setID(inp, temp);
+    }, 1200);
+});
+
+function setID(inp, temp){
+    inp.val(temp);
+}
