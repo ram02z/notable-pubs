@@ -43,7 +43,6 @@ def average_mmr(x,y):
     mmrs = [ int(i) for i in mmrs ]
     return int(sum(mmrs) / len(mmrs))
 
-
 @app.route("/", methods=["GET","POST"])
 def index():
     allmatches = []
@@ -91,7 +90,9 @@ def index():
             return render_template("index.html", player_names=player_names, hero_names=hero_names, result=allmatches, limit = True)
     return render_template("index.html", player_names = player_names, hero_names= hero_names, result = allmatches, limit= False)
 
-
+@app.route('/<int:match_id>')
+def parse(match_id):
+    return render_template("parsed.html", match = match_id)
 
 if __name__ == "__main__":
     app.run()

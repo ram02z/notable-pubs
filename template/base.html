@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="css/datatables.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Notable Pubs - match-id scraper</title>
+  </head>
+  <body class="text-monospace">
+  <nav class="navbar flex-row-reverse mb-2">
+    <a class="navbar-brand m-0" data-toggle="modal" data-target="#infoModal">
+      <svg style="cursor:help;" class="d-inline-block align-top bi bi-question" width="32" height="32" viewBox="0 0 16 16" fill="rgba(2, 117, 216, .7)" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.25 6.033h1.32c0-.781.458-1.384 1.36-1.384.685 0 1.313.343 1.313 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.007.463h1.307v-.355c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.326 0-2.786.647-2.754 2.533zm1.562 5.516c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+      </svg>
+    </a>
+    <a href="/"><h2 class="m-0 align-middle center-x"><span class="badge badge-primary align-middle">NOTABLE PUBS</span></h2></a>
+  </nav>
+  <div id="loading" class="text-primary">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+ <main>
+     {% block main %}{% endblock %}
+ </main>
+  <!-- Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-light">
+            <h5 class="modal-title" id="infoModalTitle">Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p><b>Notable Pubs</b> is a web-app made to scrape the relevant data straight from <a href="http://dota2protracker.com" class="text-decoration-none" target="_blank">dota2protracker.com</a>
+              <s> meaning no API requests are made by this web-app directly.</s> API requests are now made to
+              <a href="https://stratz.com/" class="text-decoration-none" target="_blank">STRATZ.com</a> to check against the refine options if you have used any.
+              As API requests are limited by volume and time, the player select will only allow for <strong>3</strong> selections. Otherwise, the query should run accurately as long as STRATZ has analysed the replay.
+            </p>
+            <p>Player data is limited based on their activity(players with <10 matches in the past 8 days are not listed in the dropdown).</p>
+            <p>Table rows are colored based on the outcome of the respective match.(green for win and red for loss)</p>
+            <p>In order to check the player name when a query had multiple players, hover over the matchid.</p>
+            <p>In order to copy match id, click once on the match id and it will be transferred onto your clipboard.</p>
+            <p>When the API rate limit is reached for the hour, the refine functionality will be temporarily disabled.</p>
+            <p><small>If you run across any errors that have not been handled correctly, please message me at
+              <a href="discord://" class="text-decoration-none" target="_blank">@ram02#1825</a> or on my twitter linked below.</small></p>
+          </div>
+          <div class="modal-footer justify-content-center bg-primary text-light">
+            <p>Made with <span class="love">♥</span> by <a class="lighta text-decoration-none" href="https://twitter.com/ram02z" target="_blank">@ram02z</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <footer class="text-center footer text-light fixed-bottom bg-primary">
+    <small>DOTA 2 is a registered trademark of Valve Corporation.</small>
+  </footer>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="js/datatables.min.js"></script>
+    <script type="text/javascript" src="js/custom.js"></script>
+    <script>
+       $(window).on('load', function () {
+        $('#loading').hide();
+        $('#content').css('opacity', 0)
+        $('#content').show();
+        $('#content').slideDown(400)
+        $('#content').animate(
+            { opacity: 1 },
+            { queue: false, duration: 400 });
+    });
+    </script>
+  </body>
+</html>

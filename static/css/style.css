@@ -1,7 +1,7 @@
 body {
     padding-bottom: 70px
 }
-#match-id, #match-id:focus, #match-id:active {
+td input, td input:focus, td input:active {
     background: transparent;
     border: none;
     outline: none;
@@ -12,7 +12,7 @@ body {
 }
 .spinner-border {
   position: fixed;
-  z-index: 9999;
+  z-index: -1;
   left: 0;
   right: 0;
   top: 0;
