@@ -26,58 +26,37 @@ def convID(hero):
                     append(hID)
     return hoes
 
-##Pro player names##
+##Pro player names and record##
 def peeps():
     soup,status = pagereq("http://www.dota2protracker.com/")
     players = []
+    played = []
     if status == 200:
         table_pro = soup.find(id="table_pro")
         rows = table_pro.findAll('tr')
         for row in rows[1:]:
-            td = (row.findAll('td')[0])
+            td , r = (row.findAll('td')[0]) , row.findAll('td')[1].text
             l = td.find("a")
             p = l.attrs['title']
-            append = players.append
-            append(p)
-    return players
+            players.append(p)
+            played.append(r)
+    return players, played
 
-##Hero names##
+##Hero names and record##
 def heroes():
     soup,status = pagereq("http://www.dota2protracker.com/")
     ids = []
+    played = []
     if status == 200:
         table_id = soup.find(id="table_id")
         rows = table_id.findAll('tr')
         for row in rows[1:]:
-            td = (row.findAll('td')[1])
+            td , p = (row.findAll('td')[1]) , row.findAll('td')[2].text
             l = td.find("a")
             h = l.attrs['title']
-            append = ids.append
-            append(h)
-    return ids
-
-##Player match record##
-def lowl():
-    soup,status = pagereq("http://www.dota2protracker.com/")
-    played = []
-    table_id = soup.find(id="table_pro")
-    rows = table_id.findAll('tr')
-    second_columns = []
-    for row in rows[1:]:
-        r = row.findAll('td')[1].text
-        second_columns.append(r)
-    return second_columns
-##Amount each hero is played##
-def spam():
-    soup,status = pagereq("http://www.dota2protracker.com/")
-    played = []
-    table_id = soup.find(id="table_id")
-    rows = table_id.findAll('tr')
-    third_columns = []
-    for row in rows[1:]:
-        p = row.findAll('td')[2].text
-        third_columns.append(p)
-    return third_columns
+            ids.append(h)
+            played.append(p)
+    return ids, played
 
 # ##checks the laning tab in opendota
 # def lane_old():
@@ -97,6 +76,7 @@ def spam():
 #         else:
 #             return False
 #
+
 #Lane check
 def lane(mID, hID,role, matchup):
     # flag is used to track if match was found and limited is used to check if API requests fails

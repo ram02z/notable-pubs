@@ -7,17 +7,15 @@ locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 app = Flask(__name__, template_folder='template', static_folder="static", static_url_path='')
 app.secret_key = "23df833be15d3ab59ba66172bcfb78a0"
 # Fetch player names from dota2protracker.com
-player_names = scraper.peeps()
+player_names, player_rec = scraper.peeps()
 if player_names:
-    player_rec = scraper.lowl()
     player_names = list(zip(player_names, player_rec))
     player_names = humansorted(player_names)
 else:
     player_names = []
 # Fetch hero names from dota2protracker.com
-hero_names = scraper.heroes()
+hero_names, hero_rec = scraper.heroes()
 if hero_names:
-    hero_rec = scraper.spam()
     hero_names = list(zip(hero_names, hero_rec))
     hero_names = sorted(hero_names)
 else:

@@ -44,6 +44,11 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function(){
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+            $('.selectpicker').selectpicker('mobile');
+        };
+});
 $('#radio4').change(function(){
    var lenplayers = $('#players > option').length;
    $('#players').data('max-options', lenplayers).selectpicker('refresh');;
@@ -71,6 +76,7 @@ $('.show-matchup').on('change', function() {
     $('#matchup-wrapper').collapse('show');
   }
 });
+
 
 $(document).ready(function() {
   $("[rel='tooltip'], .tooltip").tooltip();
