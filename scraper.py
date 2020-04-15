@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 #from selenium import webdriver
 
 def pagereq(url):
@@ -28,35 +29,24 @@ def convID(hero):
 
 ##Pro player names and record##
 def peeps():
-    soup,status = pagereq("http://www.dota2protracker.com/")
-    players = []
-    played = []
-    if status == 200:
-        table_pro = soup.find(id="table_pro")
-        rows = table_pro.findAll('tr')
-        for row in rows[1:]:
-            td , r = (row.findAll('td')[0]) , row.findAll('td')[1].text
-            l = td.find("a")
-            p = l.attrs['title']
-            players.append(p)
-            played.append(r)
+    response = requests.get("http://www.dota2protracker.com/")
+    if response.status_code != 200:
+        players, played = ([] for _ in range(2))
+    else:
+        dfs = pd.read_html(response.content, header=0, attrs = {'id': 'table_pro'})[0]
+        players , played = dfs.Player.tolist(), dfs.M.tolist()
     return players, played
 
 ##Hero names and record##
 def heroes():
-    soup,status = pagereq("http://www.dota2protracker.com/")
-    ids = []
-    played = []
-    if status == 200:
-        table_id = soup.find(id="table_id")
-        rows = table_id.findAll('tr')
-        for row in rows[1:]:
-            td , p = (row.findAll('td')[1]) , row.findAll('td')[2].text
-            l = td.find("a")
-            h = l.attrs['title']
-            ids.append(h)
-            played.append(p)
+    response = requests.get("http://www.dota2protracker.com/")
+    if response.status_code != 200:
+        ids, played = ([] for _ in range(2))
+    else:
+        dfs = pd.read_html(response.content, header=0, attrs = {'id': 'table_id'})[0]
+        ids , played = dfs.Hero.tolist(), dfs.Picks.tolist()
     return ids, played
+
 
 # ##checks the laning tab in opendota
 # def lane_old():
