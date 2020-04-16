@@ -13,6 +13,7 @@ if player_names:
     player_names = humansorted(player_names)
 else:
     player_names = []
+    app.logger.info("Player names is empty")
 # Fetch hero names from dota2protracker.com
 hero_names, hero_rec = scraper.heroes()
 if hero_names:
@@ -20,6 +21,7 @@ if hero_names:
     hero_names = sorted(hero_names)
 else:
     hero_names = []
+    app.logger.info("Hero names is empty")
 
 def percent(x,y):
     if len(x) == 0 and len(y) > 0:

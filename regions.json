@@ -1,0 +1,90 @@
+[
+  {
+    "id": 0,
+    "name": "unspecified"
+  },
+  {
+    "id": 1,
+    "name": "USWest"
+  },
+  {
+    "id": 2,
+    "name": "USEast"
+  },
+  {
+    "id": 3,
+    "name": "Europe"
+  },
+  {
+    "id": 5,
+    "name": "Singapore"
+  },
+  {
+    "id": 6,
+    "name": "Dubai"
+  },
+  {
+    "id": 7,
+    "name": "Australia"
+  },
+  {
+    "id": 8,
+    "name": "Stockholm"
+  },
+  {
+    "id": 9,
+    "name": "Austria"
+  },
+  {
+    "id": 10,
+    "name": "Brazil"
+  },
+  {
+    "id": 11,
+    "name": "SouthAfrica"
+  },
+  {
+    "id": 12,
+    "name": "PerfectWorldTelecom"
+  },
+  {
+    "id": 13,
+    "name": "PerfectWorldUnicom"
+  },
+  {
+    "id": 14,
+    "name": "Chile"
+  },
+  {
+    "id": 15,
+    "name": "Peru"
+  },
+  {
+    "id": 16,
+    "name": "India"
+  },
+  {
+    "id": 17,
+    "name": "PerfectWorldTelecomGuangdong"
+  },
+  {
+    "id": 18,
+    "name": "PerfectWorldTelecomZhejiang"
+  },
+  {
+    "id": 19,
+    "name": "Japan"
+  },
+  {
+    "id": 20,
+    "name": "PerfectWorldTelecomWuhan"
+  },
+  {
+    "id": 25,
+    "name": "PerfectWorldUnicomTianjin"
+  },
+  {
+    "id": 37,
+    "name": "Taiwan"
+  }
+]

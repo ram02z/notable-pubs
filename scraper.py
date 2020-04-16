@@ -1,5 +1,7 @@
+from datetime import datetime
 import requests
 import pandas as pd
+from json import loads
 #from selenium import webdriver
 
 def pagereq(url):
@@ -14,9 +16,8 @@ def convID(hero):
     if not isinstance(hero, list):
         hero = [hero]
     hoes = []
-    with open('heroes.json','r') as heroes:
-        data = heroes.read()
-    from json import loads
+    with open('heroes.json','r') as heroids:
+        data = heroids.read()
     obj = loads(data)
     for h in hero:
         for i in obj:
@@ -142,9 +143,130 @@ def hero(player, hero,outcome, role, matchup):
                         
     #order of matches in list is new to old       
     return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1], pro_names[::-1], limited
+def convRegion(rID):
+    rname = "N/A"
+    with open('regions.json','r') as r:
+        data = r.read()
+    obj = loads(data)
+    for i in obj:
+        for a, v in i.items():
+            if a == "id" and v == rID:
+                rname = i['name']
+    return rname
+def parser(mID):
+    stats = {
+        'winner': 'dire',
+        'duration': 0,
+        'region': '',
+        'endtime': 'DD/MM/YYYY HH:MM:SS',
+        'goodscore': 0,
+        'badscore': 0,
+        'players':{
+            '0':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+
+            },
+            '1':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+
+            },
+            '2':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+                'gpm':0,
+                'xpm':0,
+                'kda': '0/0/0'
+
+            },
+            '3':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+                'gpm':0,
+                'xpm':0,
+                'kda': '0/0/0'
+
+            },
+            '4':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+                'gpm':0,
+                'xpm':0,
+                'kda': '0/0/0'
+
+            },
+            '5':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+                'gpm':0,
+                'xpm':0,
+                'kda': '0/0/0'
+
+            },
+            '6':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+                'gpm':0,
+                'xpm':0,
+                'kda': '0/0/0'
+
+            },
+            '7':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+                'gpm':0,
+                'xpm':0,
+                'kda': '0/0/0'
+
+            },
+            '8':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+                'gpm':0,
+                'xpm':0,
+                'kda': '0/0/0'
+
+            },
+            '9':{
+                'hero':'',
+                'name':'',
+                'mmr':0,
+                'gpm':0,
+                'xpm':0,
+                'kda': '0/0/0'
+
+            }
+        }
+    }
+    response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown")
+    rheader = response.headers
+    if response.status_code == 200:
+        if int(rheader['X-RateLimit-Remaining-Hour']) > 0 and int(rheader['X-RateLimit-Remaining-Minute']) > 0 and int(rheader['X-RateLimit-Remaining-Second']) > 0:
+            data = response.json()
+            if data['didRadiantWin'] == True:
+                stats['winner'] = 'radiant'
+            seconds = data['durationSeconds']
+            stats['duration'] = '{0:02d}:{1:02d}'.format(*divmod(seconds, 60))
+            stats['region'] = convRegion(data['regionId'])
+            ts = int(data['endDateTime'])
+            ftime = datetime.utcfromtimestamp(ts).strftime('%d/%m/%Y %H:%M:%S')
+            stats['endtime'] = ftime
+
+    return stats
 
 if __name__ == "__main__":
     #tests#
+    print(parser(5358104635))
     print(convID(['Centaur Warrunner']))
     #import time
     #start_time = time.process_time()
