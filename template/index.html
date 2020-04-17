@@ -1,30 +1,31 @@
 {% extends "/base.html" %}
+{% block title %}Notable Pubs - a match-id scraper {%endblock%}
 {% block main %}
   <div id="content" style="display: none;" class="container-md">
       {% if hero_names and player_names%}
-      <form id= "select-form" class="row justify-content-center align-items-center mt-2" method="post">
+      <form name="form" id= "select-form" class="row justify-content-center align-items-center mt-2" action="/" method="post">
         <div class="form-group col-md-6 text-center text-md-left">
           <div id="hero-wrapper">
             <label class= "text-primary font-weight-bold " for="heroes">Heroes : </label>
             <select data-width="100%" class="selectpicker" data-live-search="true" name ="heroes" id="heroes" title="Select a hero" data-size="8">
               {%for i in hero_names%}
-              <option data-subtext="{{ i[1] }} picks" value="{{ i[0] }}">{{i[0]}}</option>
+              <option {%if selected and i[0] == selected%} selected {%endif%} data-subtext="{{ i[1] }} picks" value="{{ i[0] }}">{{i[0]}}</option>
               {%endfor%}
             </select>
           </div>
           <br>
           <div id="player-wrapper">
             <label class="text-primary font-weight-bold" for="players">Players :</label>
-            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" required multiple data-actions-box="true" data-max-options="{{player_names|length}}">
+            <select data-width="100%" class="selectpicker" data-live-search="true" name="players" id="players" title="Select player(s)" data-size="8" multiple data-actions-box="true" data-max-options="{{player_names|length}}">
               {%for j in player_names%}
-              <option data-subtext="{{ j[1] }} games" value="{{ j[0] }}">{{j[0]}}</option>
+              <option data-subtext="{{ j[1] }} game{%if j[1] > 1 %}s{%endif%}" value="{{ j[0] }}">{{j[0]}}</option>
               {%endfor%}
             </select>
           </div>
             <div class="text-center text-md-left">
-              <button onclick="loading();" name="submit_button" id="submit" value="submit" type="submit" class="btn btn-primary btn-block mt-4" disabled>Search</button>
+              <button onclick="loading();" name="submit_button" id="submit_button" value="submitbtn" type="submit" class="btn btn-primary btn-block mt-4" disabled>Search</button>
               <span {%if limit%} tabindex="0" rel="tooltip" data-placement="bottom" title="You have reached the limit for the hour!"{%endif%}>
-                <button {%if limit%} disabled style="pointer-events: none;" {%endif%} class="btn btn-primary btn-block mt-4 btn-sm" type="button" data-toggle="collapse" data-target="#collapse-options" aria-expanded="false" aria-controls="collapse-options">Refine
+                <button id="refine" {%if limit%} disabled style="pointer-events: none;" {%endif%} class="btn btn-primary btn-block mt-4 btn-sm" type="button" data-toggle="collapse" data-target="#collapse-options" aria-expanded="false" aria-controls="collapse-options" disabled>Refine
                   <span class="badge badge-light">beta</span>
                 </button>
                 </span>
@@ -63,6 +64,18 @@
           </div>
       </div>
       </form>
+    {% with messages = get_flashed_messages(category_filter=["plimited"]) %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+            {{ message }}
+            <button type="button" class="close text-black-50" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     {% with messages = get_flashed_messages(category_filter=["limited"]) %}
       {% if messages %}
         {% for message in messages %}
@@ -96,9 +109,9 @@
         {% if result %}
           {% for k, parent in result.items() %}
               <tr {%if parent['outcome'] == 'win' %} class= "table-success"{% endif %}{%if parent['outcome'] == 'loss'%} class ="table-danger"{%endif%}>
-                <td>
+                <td title="Click the id to copy">
                   <span style="display:none;">{{k}}</span>
-                  <input size="{{k|length}}" style="cursor:pointer" type="text" readonly="readonly" value="{{k}}" {%if parent['name'] != "0"%} rel="tooltip" data-placement="right" title="{{ parent['name'] }}"{% endif %}>
+                  <input size="{{k|length}}" style="cursor:copy;" type="text" readonly="readonly" value="{{k}}" {%if parent['name'] != "0"%} rel="tooltip" data-placement="right" title="{{ parent['name'] }}"{% endif %}>
                 </td>
                 <td>{{parent['avgmmr']}}</td>
                 <td>{{parent['duration']}}

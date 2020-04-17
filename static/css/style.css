@@ -69,10 +69,81 @@ a svg:focus {
     border-color: #dee2e6
 }
 
+.match-links{
+    width: 32px;
+    height: auto;
+    transition: transform .2s linear;
+    -webkit-filter: drop-shadow(1px 2px 2px #222);
+    filter: drop-shadow(1px 2px 2px #222);
+    transform: scale(0.9);
+
+}
+
+#links-badge img:hover {
+    transform: scale(1.22);
+}
+
+.custom-border{
+    border-width: .25em !important;
+}
+
+
+.list-rad:nth-child(odd) {
+    background-color: rgba(40,167,69,0.4);
+    }
+.list-rad:hover:nth-child(odd) {
+    background-color: rgba(40,167,69,0.5);
+    color:#007bff;
+    }
+.list-rad:nth-child(even) {
+    background-color: rgba(40,167,69,0.2);
+    }
+.list-rad:hover:nth-child(even) {
+    background-color: rgba(40,167,69,0.3);
+    color:#007bff;
+    }
+.list-dire:nth-child(odd) {
+    background-color: rgba(220,53,69,0.4);
+    }
+.list-dire:hover:nth-child(odd) {
+    background-color: rgba(220,53,69,0.5);
+    color:#007bff;
+    }
+.list-dire:nth-child(even) {
+    background-color: rgba(220,53,69,0.2);
+    }
+.list-dire:hover:nth-child(even) {
+    background-color: rgba(220,53,69,0.3);
+    color:#007bff;
+    }
+
+.tooltip-inner {
+background-color: #007bff;
+}
+.tooltip.bs-tooltip-right .arrow:before {
+    border-right-color: #007bff !important;
+}
+.tooltip.bs-tooltip-left .arrow:before {
+    border-left-color: #007bff !important;
+}
+.tooltip.bs-tooltip-bottom .arrow:before {
+    border-bottom-color: #007bff !important;
+}
+.tooltip.bs-tooltip-top .arrow:before {
+    border-top-color: #007bff !important;
+}
+@media screen and (max-width:576px){
+    .btn-group{
+    display:flex;
+    flex-direction: column;
+    }
+
+}
 @media (max-width:991.98px) {
     .center-x {
         position: absolute;
         left: 50%;
+        top: 10%;
         transform: translateX(-50%)
     }
 }
@@ -84,7 +155,12 @@ a svg:focus {
 }
 }
 #winloss_info {
-    color: #0275d8
+    color: #007bff
+}
+
+::selection {
+    background-color: #007bff;
+    color: white;
 }
 
 .love {

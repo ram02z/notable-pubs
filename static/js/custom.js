@@ -4,22 +4,25 @@ $(document).ready(function() {
         select2 = $('#players').val();
         select3 = $('#matchup').val();
         if (select1.length == 0 || select2.length == 0) {
-            $('#submit').prop("disabled", !0)
+            $('#submit_button').prop("disabled", !0)
+            $('#refine').prop("disabled", !0)
         } else {
-            $('#submit').prop("disabled", !1)
+            $('#submit_button').prop("disabled", !1)
+            $('#refine').prop("disabled", !1)
         }
     })
 });
-//stack overflow: https://stackoverflow.com/questions/6453269/jquery-select-element-by-xpath
-function _x(STR_XPATH) {
-    var xresult = document.evaluate(STR_XPATH, document, null, XPathResult.ANY_TYPE, null);
-    var xnodes = [];
-    var xres;
-    while (xres = xresult.iterateNext()) {
-        xnodes.push(xres);
-    }
-    return xnodes;
-}
+$(document).ready(function() {
+  select2 = $('#players').val();
+  $('#heroes').on('change', function() {
+  if (select2.length == 0){
+    document.title = 'Updating player select to match hero selection'
+    loading();
+    document.forms["form"].submit();
+  }
+  });
+});
+
 function loading(){
     $('#content').fadeOut();
     $('#content').hide();
@@ -53,23 +56,27 @@ $('#radio4').change(function(){
    var lenplayers = $('#players > option').length;
    $('#players').data('max-options', lenplayers).selectpicker('refresh');;
    $("#matchup").val('').trigger('change').selectpicker('refresh');
-   $(_x('/html/body/div[2]/form/div[1]/div[2]/div/div/div[2]/div/button[1]')).prop('disabled', false);
+   $(".bs-select-all").prop('disabled', false);
    $("#players").selectpicker('refresh');
    $('#matchup-wrapper').collapse('hide');
    $("#matchup").prop("disabled",true).selectpicker('refresh');
 });
 
 $('.show-matchup').on('change', function() {
+  var lenplayers2 = Math.floor(($('#players > option').length)/4);
+  if (lenplayers2 < 5){
+    var lenplayers2 = 5
+  }
   $("#matchup").prop("disabled",false).selectpicker('refresh');
-  $(_x('/html/body/div[2]/form/div[1]/div[2]/div/div/div[2]/div/button[1]')).prop('disabled', true);
+  $(".bs-select-all").prop('disabled', true);
   $("#players").selectpicker('refresh');
-  $('#players').data('max-options', 3).selectpicker('refresh');
+  $('#players').data('max-options', lenplayers2).selectpicker('refresh');
   var data=[];
   var $el=$("#players");
   $el.find('option:selected').each(function(){
     data.push($(this).val());
    });
-  var handicap = data.slice(0,3)
+  var handicap = data.slice(0,lenplayers2)
   $('#players').val(handicap).selectpicker('render');
   $("#matchup").val('').trigger('change').selectpicker('refresh');
   if($(this).val() === "Mid" || $(this).val() === "Off" || $(this).val() === "Safe"){
@@ -105,3 +112,23 @@ $('td').on('click','input',function() {
 function setID(inp, temp){
     inp.val(temp);
 }
+$(document).ready(function() {
+  $("#links-wrapper").css({
+    'width': ($("#id-badge").width() + 10 + 'px')
+  });
+});
+
+$('#id-badge').click(function(e){
+    $('#links-wrapper').slideToggle(300,"swing");
+});
+$(document).ready(function() {
+    $('.btn-group button').click(function() {
+        $(this).prop('disabled', true).siblings().prop('disabled', false);
+        var spanclass = "." + this.id
+        $('#radspans > *').css('display','none');
+        $('#direspans > *').css('display','none');
+        $(spanclass).show();
+
+
+    });
+});

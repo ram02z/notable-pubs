@@ -3,11 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/bootstrap-select.min.css">
-    <link rel="stylesheet" type="text/css" href="css/datatables.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Notable Pubs - match-id scraper</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-select.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datatables.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dota2minimapheroes.css')}}">
+    <title>{% block title %}{% endblock %}</title>
   </head>
   <body class="text-monospace">
   <nav class="navbar flex-row-reverse mb-2">
@@ -37,18 +39,44 @@
             </button>
           </div>
           <div class="modal-body">
-            <p><b>Notable Pubs</b> is a web-app made to scrape the relevant data straight from <a href="http://dota2protracker.com" class="text-decoration-none" target="_blank">dota2protracker.com</a>
-              <s> meaning no API requests are made by this web-app directly.</s> API requests are now made to
-              <a href="https://stratz.com/" class="text-decoration-none" target="_blank">STRATZ.com</a> to check against the refine options if you have used any.
-              As API requests are limited by volume and time, the player select will only allow for <strong>3</strong> selections. Otherwise, the query should run accurately as long as STRATZ has analysed the replay.
-            </p>
-            <p>Player data is limited based on their activity(players with <10 matches in the past 8 days are not listed in the dropdown).</p>
-            <p>Table rows are colored based on the outcome of the respective match.(green for win and red for loss)</p>
-            <p>In order to check the player name when a query had multiple players, hover over the matchid.</p>
-            <p>In order to copy match id, click once on the match id and it will be transferred onto your clipboard.</p>
-            <p>When the API rate limit is reached for the hour, the refine functionality will be temporarily disabled.</p>
-            <p><small>If you run across any errors that have not been handled correctly, please message me at
-              <a href="discord://" class="text-decoration-none" target="_blank">@ram02#1825</a> or on my twitter linked below.</small></p>
+            <div id="accordion">
+              <div class="card border-0">
+                <div class="card-header bg-white border-bottom border-primary text-center" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      About
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                  <div class="card-body">
+                    <b>Notable Pubs</b> is a web-app made to scrape the relevant data straight from <a href="http://dota2protracker.com" class="text-decoration-none" target="_blank">dota2protracker.com</a>
+                    <s> meaning no API requests are made by this web-app directly.</s> API requests are now made to
+                    <a href="https://stratz.com/" class="text-decoration-none" target="_blank">STRATZ.com</a> to check against the refine options if you have used any.
+                    As API requests are limited by volume and time, the player select will have a max set dynamically. Otherwise, the query should run accurately as long as STRATZ has analysed the replay.
+                  </div>
+                </div>
+              </div>
+              <div class="card border-0">
+                <div class="card-header bg-white text-center border-bottom border-primary" id="headingTwo">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Help
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                  <div class="card-body">
+                    Player data is limited based on their activity(players with <10 matches in the past 8 days are not listed in the dropdown).<br>
+                    Table rows are colored based on the outcome of the respective match.(green for win and red for loss)<br>
+                    In order to check the player name when a query had multiple players, hover over the matchid.<br>
+                    In order to copy match id, click once on the match id and it will be transferred onto your clipboard.<br>
+                    You can access a quick view of the match's stats by clicking on the + sign shown on the final column.<br>
+                    When the API rate limit is reached for the hour, the refine functionality will be temporarily disabled.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer justify-content-center bg-primary text-light">
             <p>Made with <span class="love">♥</span> by <a class="lighta text-decoration-none" href="https://twitter.com/ram02z" target="_blank">@ram02z</a></p>
@@ -59,12 +87,12 @@
   <footer class="text-center footer text-light fixed-bottom bg-primary">
     <small>DOTA 2 is a registered trademark of Valve Corporation.</small>
   </footer>
-    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="js/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/bootstrap-select.min.js"></script>
-    <script type="text/javascript" src="js/datatables.min.js"></script>
-    <script type="text/javascript" src="js/custom.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js')}}" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js')}}"  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-select.min.js')}}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/datatables.min.js')}}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/custom.js')}}" ></script>
     <script>
        $(window).on('load', function () {
         $('#loading').hide();

@@ -1,7 +1,9 @@
 from datetime import datetime
 import requests
+from requests import exceptions
 import pandas as pd
 from json import loads
+from requests.utils import requote_uri
 #from selenium import webdriver
 
 def pagereq(url):
@@ -27,25 +29,38 @@ def convID(hero):
                     append = hoes.append
                     append(hID)
     return hoes
+def conv2ID(hID):
+    hero = 'N/A'
+    with open('heroes.json', 'r') as heroids:
+        data = heroids.read()
+    obj = loads(data)
+    for i in obj:
+        for a, v in i.items():
+            if a == "id" and v == hID:
+                hero = i["localized_name"]
+    return hero
+
 
 ##Pro player names and record##
 def peeps():
-    response = requests.get("http://www.dota2protracker.com/")
-    if response.status_code != 200:
-        players, played = ([] for _ in range(2))
-    else:
+    try:
+        response = requests.get("http://www.dota2protracker.com/", timeout=4)
         dfs = pd.read_html(response.content, header=0, attrs = {'id': 'table_pro'})[0]
         players , played = dfs.Player.tolist(), dfs.M.tolist()
+    except (exceptions.ConnectionError, exceptions.Timeout,
+                exceptions.HTTPError, exceptions.RequestException) as e:
+            players, played = ([] for _ in range(2))
     return players, played
 
 ##Hero names and record##
 def heroes():
-    response = requests.get("http://www.dota2protracker.com/")
-    if response.status_code != 200:
-        ids, played = ([] for _ in range(2))
-    else:
+    try:
+        response = requests.get("http://www.dota2protracker.com/", timeout=4)
         dfs = pd.read_html(response.content, header=0, attrs = {'id': 'table_id'})[0]
         ids , played = dfs.Hero.tolist(), dfs.Picks.tolist()
+    except (exceptions.ConnectionError, exceptions.Timeout,
+                exceptions.HTTPError, exceptions.RequestException) as e:
+        ids, played = ([] for _ in range(2))
     return ids, played
 
 
@@ -81,7 +96,7 @@ def lane(mID, hID,role, matchup):
     response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown")
     rheader = response.headers
     if response.status_code == 200:
-        if int(rheader['X-RateLimit-Remaining-Hour']) > 0 and int(rheader['X-RateLimit-Remaining-Minute']) > 0 and int(rheader['X-RateLimit-Remaining-Second']) > 0:
+        if int(rheader['x-ratelimit-remaining-hour']) > 0 and int(rheader['x-ratelimit-limit-minute']) > 0 and int(rheader['x-ratelimit-limit-second']) > 0:
             data = response.json()['players']
             if 'lane' in data[0]:
                 for i in range(0,10):
@@ -110,7 +125,6 @@ def lane(mID, hID,role, matchup):
 def hero(player, hero,outcome, role, matchup):
     hID = convID(hero)
     limited = False
-    from requests.utils import requote_uri
     soup, status = pagereq(f"http://www.dota2protracker.com/hero/{requote_uri(hero)}")
     match_ids,avg_mmr, match_time, loutcome,pro_names = ([] for _ in range(5))
     if status == 200:
@@ -143,6 +157,30 @@ def hero(player, hero,outcome, role, matchup):
                         
     #order of matches in list is new to old       
     return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1], pro_names[::-1], limited
+
+
+#Limits player list based on hero chosen
+def plimiter(hero):
+    try:
+        response = requests.get(f"http://www.dota2protracker.com/hero/{requote_uri(hero)}", timeout=4)
+        dfs = pd.read_html(response.content, header=0, attrs = {'id': 'table_matches'})[0]
+        dfs.rename(columns={ dfs.columns[1]: "Name" }, inplace=True)
+        noplist = dfs['Name'].tolist()
+        plist = []
+        for i in noplist:
+            if 'won' in i:
+                p = i.partition("won")[0]
+                plist.append(p.strip())
+            if 'lost' in i:
+                p = i.partition("lost")[0]
+                plist.append(p.strip())
+        counter = [[x,plist.count(x)] for x in set(plist)]
+    except (exceptions.ConnectionError, exceptions.Timeout,
+            exceptions.HTTPError, exceptions.RequestException) as e:
+        counter = []
+    return counter
+
+
 def convRegion(rID):
     rname = "N/A"
     with open('regions.json','r') as r:
@@ -153,7 +191,21 @@ def convRegion(rID):
             if a == "id" and v == rID:
                 rname = i['name']
     return rname
+
+def convLane(lID):
+    lane = "Unanalyzed"
+    if lID == 1:
+        lane = "Safe lane"
+    elif lID == 2:
+        lane = "Mid lane"
+    elif lID == 3:
+        lane = "Offlane"
+    elif lID == 0:
+        lane = "Jungle"
+    return lane
+
 def parser(mID):
+    parsed = False
     stats = {
         'winner': 'dire',
         'duration': 0,
@@ -162,88 +214,165 @@ def parser(mID):
         'goodscore': 0,
         'badscore': 0,
         'players':{
-            '0':{
+            0:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
+                'gpm': 0,
+                'xpm': 0,
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
+
 
             },
-            '1':{
+            1:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
+                'gpm': 0,
+                'xpm': 0,
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             },
-            '2':{
+            2:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
                 'gpm':0,
                 'xpm':0,
-                'kda': '0/0/0'
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             },
-            '3':{
+            3:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
                 'gpm':0,
                 'xpm':0,
-                'kda': '0/0/0'
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             },
-            '4':{
+            4:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
                 'gpm':0,
                 'xpm':0,
-                'kda': '0/0/0'
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             },
-            '5':{
+            5:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
                 'gpm':0,
                 'xpm':0,
-                'kda': '0/0/0'
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             },
-            '6':{
+            6:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
                 'gpm':0,
                 'xpm':0,
-                'kda': '0/0/0'
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             },
-            '7':{
+            7:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
                 'gpm':0,
                 'xpm':0,
-                'kda': '0/0/0'
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             },
-            '8':{
+            8:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
                 'gpm':0,
                 'xpm':0,
-                'kda': '0/0/0'
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             },
-            '9':{
+            9:{
+                'id': -1,
                 'hero':'',
                 'name':'',
-                'mmr':0,
                 'gpm':0,
                 'xpm':0,
-                'kda': '0/0/0'
+                'kills': 0,
+                'deaths': 0,
+                'assists': 0,
+                'cs10': -1,
+                'networth': 0,
+                'lane': -1,
+                'roaming': False,
+                'pro': False
 
             }
         }
@@ -252,6 +381,7 @@ def parser(mID):
     rheader = response.headers
     if response.status_code == 200:
         if int(rheader['X-RateLimit-Remaining-Hour']) > 0 and int(rheader['X-RateLimit-Remaining-Minute']) > 0 and int(rheader['X-RateLimit-Remaining-Second']) > 0:
+            parsed = True
             data = response.json()
             if data['didRadiantWin'] == True:
                 stats['winner'] = 'radiant'
@@ -261,13 +391,66 @@ def parser(mID):
             ts = int(data['endDateTime'])
             ftime = datetime.utcfromtimestamp(ts).strftime('%d/%m/%Y %H:%M:%S')
             stats['endtime'] = ftime
-
-    return stats
+            goodscore = 0
+            for i in range(5):
+                goodscore+= data['players'][i]['numKills']
+                stats['players'][i]['id'] = data['players'][i]['heroId']
+                stats['players'][i]['hero'] = conv2ID(data['players'][i]['heroId'])
+                stats['players'][i]['name'] = data['players'][i]['steamAccount']['name']
+                if 'proSteamAccount' in data['players'][i]['steamAccount']:
+                    stats['players'][i]['name'] = data['players'][i]['steamAccount']['proSteamAccount']['name']
+                    stats['players'][i]['pro'] = True
+                stats['players'][i]['gpm'] = data['players'][i]['goldPerMinute']
+                stats['players'][i]['xpm'] = data['players'][i]['experiencePerMinute']
+                stats['players'][i]['kills'] = data['players'][i]['numKills']
+                stats['players'][i]['deaths'] = data['players'][i]['numDeaths']
+                stats['players'][i]['assists'] = data['players'][i]['numAssists']
+                stats['players'][i]['networth'] = data['players'][i]['networth']
+                if 'lane' in data['players'][i]:
+                    stats['players'][i]['lane'] = convLane(data['players'][i]['lane'])
+                    if data['players'][i]['lane'] == 0:
+                        stats['players'][i]['lane'] = convLane(data['players'][i]['roamLane'])
+                        stats['players'][i]['roaming'] = True
+                if 'stats' in data['players'][i] and data['durationSeconds'] >= 660:
+                    cscount = 0
+                    for m in range(11):
+                        cscount+= data['players'][i]['stats']['lastHitPerMinute'][m]
+                    stats['players'][i]['cs10']= cscount
+            stats['goodscore'] = goodscore
+            badscore = 0
+            for j in range(5, 10):
+                badscore+= data['players'][j]['numKills']
+                stats['players'][j]['id'] = data['players'][j]['heroId']
+                stats['players'][j]['hero'] = conv2ID(data['players'][j]['heroId'])
+                stats['players'][j]['name'] = data['players'][j]['steamAccount']['name']
+                if 'proSteamAccount' in data['players'][j]['steamAccount']:
+                    stats['players'][j]['name'] = data['players'][j]['steamAccount']['proSteamAccount']['name']
+                    stats['players'][j]['pro'] = True
+                stats['players'][j]['gpm'] = data['players'][j]['goldPerMinute']
+                stats['players'][j]['xpm'] = data['players'][j]['experiencePerMinute']
+                stats['players'][j]['kills'] = data['players'][j]['numKills']
+                stats['players'][j]['deaths'] = data['players'][j]['numDeaths']
+                stats['players'][j]['assists'] = data['players'][j]['numAssists']
+                stats['players'][j]['networth'] = data['players'][j]['networth']
+                if 'lane' in data['players'][j]:
+                    stats['players'][j]['lane'] = convLane(data['players'][j]['lane'])
+                    if data['players'][j]['lane'] == 0:
+                        stats['players'][j]['lane'] = convLane(data['players'][j]['roamLane'])
+                        stats['players'][j]['roaming'] = True
+                if 'stats' in data['players'][j] and data['durationSeconds'] >= 660:
+                    cscount = 0
+                    for k in range(11):
+                        cscount+= data['players'][j]['stats']['lastHitPerMinute'][k]
+                    stats['players'][j]['cs10']= cscount
+            stats['badscore'] = badscore
+    return stats, parsed
 
 if __name__ == "__main__":
     #tests#
-    print(parser(5358104635))
-    print(convID(['Centaur Warrunner']))
+    #print(heroes())
+    print(plimiter("Pangolier"))
+    #stats , parsed = parser(5359185886)
+    #print(convID(['Centaur Warrunner']))
     #import time
     #start_time = time.process_time()
     #lane()

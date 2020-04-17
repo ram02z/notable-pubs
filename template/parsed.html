@@ -1,5 +1,101 @@
 {% extends "/base.html" %}
+{% block title %}Match {{ match }} - Notable Pubs{%endblock%}
 {% block main %}
-<h1>{{ match }}</h1>
-<h2>insert stats from api</h2>
+<div class="text-center mt-3">
+    <div id="id-wrapper" class="container">
+        <div class="row">
+            <div class="col align-self-center">
+                <div style="cursor:pointer;" id="id-badge" class="badge badge-light"><h2 class="display-4">{{ match }}</h2></div>
+            </div>
+            </div>
+        <div style="display:none;" id="links-wrapper" class="container mt-2">
+            <div class="row">
+                <div id="links-badge" class="badge badge-light border border-light custom-border d-flex justify-content-between col">
+                    <a href="https://www.dotabuff.com/matches/{{ match }}"><img class="match-links rounded-lg" src="{{ url_for('static', filename='icons/dotabuff.png')}}" alt="Dotabuff"></a>
+                    <a href="https://www.opendota.com/matches/{{ match }}"><img class="match-links rounded-lg" src="{{ url_for('static', filename='icons/opendota.png')}}" alt="OpenDota"></a>
+                    <a href="https://stratz.com/matches/{{ match }}"><img class="match-links rounded-lg" src="{{ url_for('static', filename='icons/stratz.png')}}" alt="Stratz"></a>
+                  </div>
+            </div>
+        </div>
+        </div>
+    <div class="container rounded-lg mt-2 text-dark">
+      <div class="row bg-light rounded-sm">
+        <div class="col-md h5">
+            <span class="text-muted d-none d-md-inline">Server region : </span><span class="font-weight-bold">{{ stats['region'] }}</span>
+        </div>
+        <div style="cursor:default;" class="col-md h5">
+            <span rel="tooltip" data-placement="bottom" title="{{ stats['endtime'] }}">Played {%if days != 0%}<span class="font-weight-bold">{{days}}</span> day{%if days > 1%}s{%endif%} ago {%else%} today{%endif%}</span>
+        </div>
+      </div>
+        <div class="row font-weight-bold">
+            <div class="col display-4 d-flex justify-content-center mx-auto align-items-center">
+                <span {%if stats['winner'] == 'radiant'%}style="text-decoration: underline;"{%endif%} class="text-success">{{ stats['goodscore'] }}</span>
+                        <span style="font-size: .5em" class="font-weight-bold mx-2">
+                            {{ stats['duration'] }}
+                        </span>
+                <span {%if stats['winner'] == 'dire'%}style="text-decoration: underline;"{%endif%} class="text-danger">{{ stats['badscore'] }}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div id="radiant" class="col-md">
+                {%for i in range(5)%}
+                <div class="row flex-row-reverse text-truncate list-rad rounded-sm">
+                    <i class="list-inline-item d2mh mx-1 hero-{{ stats['players'][i]['id'] }}"></i>
+                    {%if stats['players'][i]['pro'] == True %}
+                        <svg class="bi bi-star-fill mt-1" width="1em" height="1em" viewBox="0 0 16 16" fill="gold" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                        </svg>
+                        {% endif %}
+                    <div id="radspans" class="mr-1 font-weight-bold">
+                        <span class="hname">{{ stats['players'][i]['hero'] }}</span>
+                        <span style="display:none;" class="pname">{{ stats['players'][i]['name'] }}</span>
+                        <span style="display:none;" class="permins">GPM: {{ stats['players'][i]['gpm'] }} XPM: {{ stats['players'][i]['xpm'] }} </span>
+                        <span style="display:none;" class="kda"> {{ stats['players'][i]['kills'] }}/{{ stats['players'][i]['deaths'] }}/{{ stats['players'][i]['assists'] }} </span>
+                        <span style="display:none;" class="csat10"> {%if stats['players'][i]['cs10'] != -1 %}{{ stats['players'][i]['cs10'] }} creep kills @ 10 minutes {%else%} Unanalyzed{%endif%}</span>
+                        <span style="display:none;" class="networth"> {{ stats['players'][i]['networth'] }} gold </span>
+                        <span style="display:none;" class="plane"> {%if stats['players'][i]['lane'] != -1%}{%if stats['players'][i]['roaming']%}Roamed around the{%endif%} {{ stats['players'][i]['lane'] }} {%else%} Unanalyzed {%endif%} </span>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            <div id="dire" class="col-md">
+                {%for j in range(5, 10)%}
+                <div class="row list-dire text-truncate rounded-sm">
+                    <i class="d2mh mx-1 hero-{{ stats['players'][j]['id'] }}"></i>
+                        {%if stats['players'][j]['pro'] == True %}
+                        <svg class="bi bi-star-fill mt-1" width="1em" height="1em" viewBox="0 0 16 16" fill="gold" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                        </svg>
+                        {% endif %}
+                    <div id="direspans" class="font-weight-bold text-truncate">
+                        <span class="hname"> {{ stats['players'][j]['hero'] }}</span>
+                        <span style="display:none;" class="pname"> {{ stats['players'][j]['name'] }}</span>
+                        <span style="display:none;" class="permins"> GPM: {{ stats['players'][j]['gpm'] }} XPM: {{ stats['players'][j]['xpm'] }} </span>
+                        <span style="display:none;" class="kda"> {{ stats['players'][j]['kills'] }}/{{ stats['players'][j]['deaths'] }}/{{ stats['players'][j]['assists'] }} </span>
+                        <span style="display:none;" class="csat10"> {%if stats['players'][j]['cs10'] != -1 %}{{ stats['players'][j]['cs10'] }} creep kills @ 10 minutes {%else%} Unanalyzed{%endif%}</span>
+                        <span style="display:none;" class="networth"> {{ stats['players'][j]['networth'] }} gold </span>
+                        <span style="display:none;" class="plane"> {%if stats['players'][j]['lane'] != -1%}{%if stats['players'][j]['roaming']%} Roamed around the{%endif%} {{ stats['players'][j]['lane'] }} {%else%} Unanalyzed {%endif%} </span>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <div class=" mt-2 row bg-light rounded-sm justify-content-center">
+            <h4 class="font-weight-bold">Toggle Stats</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group mt-2 d-block" role="group" aria-label="Switch stats">
+                  <button id="hname" disabled type="button" class="rounded m-1 btn btn-dark">Hero name</button>
+                  <button id="pname" type="button" class="rounded m-1 btn btn-dark">Player name</button>
+                  <button id="permins" type="button" class=" rounded m-1 btn btn-dark">GPM/XPM</button>
+                  <button id="kda" type="button" class=" rounded m-1 btn btn-dark">KDA</button>
+                  <button id="csat10" type="button" class="rounded m-1 btn btn-dark">CS @ 10</button>
+                  <button id="networth" type="button" class=" rounded m-1 btn btn-dark">Networth</button>
+                  <button id="plane" type="button" class="rounded m-1 btn btn-dark">Lane</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
