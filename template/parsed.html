@@ -53,7 +53,7 @@
                         <span style="display:none;" class="kda"> {{ stats['players'][i]['kills'] }}/{{ stats['players'][i]['deaths'] }}/{{ stats['players'][i]['assists'] }} </span>
                         <span style="display:none;" class="csat10"> {%if stats['players'][i]['cs10'] != -1 %}{{ stats['players'][i]['cs10'] }} creep kills @ 10 minutes {%else%} Unanalyzed{%endif%}</span>
                         <span style="display:none;" class="networth"> {{ stats['players'][i]['networth'] }} gold </span>
-                        <span style="display:none;" class="plane"> {%if stats['players'][i]['lane'] != -1%}{%if stats['players'][i]['roaming']%}Roamed around the{%endif%} {{ stats['players'][i]['lane'] }} {%else%} Unanalyzed {%endif%} </span>
+                        <span style="display:none;" class="plane"> {%if stats['players'][i]['lane'] != -1%}{%if stats['players'][i]['roaming']%}Roamed around {%endif%} {{ stats['players'][i]['lane'] }} {%else%} Unanalyzed {%endif%} </span>
                     </div>
                 </div>
                 {%endfor%}
@@ -74,7 +74,7 @@
                         <span style="display:none;" class="kda"> {{ stats['players'][j]['kills'] }}/{{ stats['players'][j]['deaths'] }}/{{ stats['players'][j]['assists'] }} </span>
                         <span style="display:none;" class="csat10"> {%if stats['players'][j]['cs10'] != -1 %}{{ stats['players'][j]['cs10'] }} creep kills @ 10 minutes {%else%} Unanalyzed{%endif%}</span>
                         <span style="display:none;" class="networth"> {{ stats['players'][j]['networth'] }} gold </span>
-                        <span style="display:none;" class="plane"> {%if stats['players'][j]['lane'] != -1%}{%if stats['players'][j]['roaming']%} Roamed around the{%endif%} {{ stats['players'][j]['lane'] }} {%else%} Unanalyzed {%endif%} </span>
+                        <span style="display:none;" class="plane"> {%if stats['players'][j]['lane'] != -1%}{%if stats['players'][j]['roaming']%} Roamed around {%endif%} {{ stats['players'][j]['lane'] }} {%else%} Unanalyzed {%endif%} </span>
                     </div>
                 </div>
                 {%endfor%}

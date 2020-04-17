@@ -198,7 +198,7 @@ def convLane(lID):
         lane = "Safe lane"
     elif lID == 2:
         lane = "Mid lane"
-    elif lID == 3:
+    elif lID == 3 or lID == 4:
         lane = "Offlane"
     elif lID == 0:
         lane = "Jungle"
