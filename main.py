@@ -72,12 +72,6 @@ def index():
         player = request.form.getlist("players")
         role = request.form.get("role-radio", "")
         matchup = request.form.getlist("matchup")
-        response = requests.get(f"https://api.stratz.com/api/v1/Language")
-        limitNO = 0
-        if response.status_code == 200:
-            limitNO = int(response.headers['X-RateLimit-Remaining-Hour'])
-            import sys
-            print(f'{limitNO} left this hour.', file=sys.stderr)
         A, B , C, D ,E , limited = scraper.hero(player,hero,"green", role, matchup)
         if matchup:
             time.sleep(1)
@@ -106,6 +100,10 @@ def index():
             message = Markup(f"Showing match-ids from {player} for <strong>{hero}</strong>; <em>{extra}</em> <br>Win Percentage: <strong>{percent(A,F)}</strong>, "
                              f"Average duration: <strong>{duration(C,H)}</strong>, Average MMR: <strong>{average_mmr(B,G)}</strong>.")
             flash(message, 'primary')
+        limitNO = 0
+        response = requests.get(f"https://api.stratz.com/api/v1/Language")
+        if response.status_code == 200:
+            limitNO = int(response.headers['X-RateLimit-Remaining-Hour'])
         if limitNO == 0:
             return render_template("index.html", player_names=player_names, hero_names=hero_names, result=allmatches, limit = True, selected = selected)
     return render_template("index.html", player_names = player_names, hero_names= hero_names, result = allmatches, limit= False, selected= selected)

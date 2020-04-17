@@ -182,7 +182,7 @@ def plimiter(hero):
 
 
 def convRegion(rID):
-    rname = "N/A"
+    rname = "?"
     with open('regions.json','r') as r:
         data = r.read()
     obj = loads(data)
@@ -193,7 +193,7 @@ def convRegion(rID):
     return rname
 
 def convLane(lID):
-    lane = "Unanalyzed"
+    lane = "?"
     if lID == 1:
         lane = "Safe lane"
     elif lID == 2:
@@ -448,13 +448,14 @@ def parser(mID):
 if __name__ == "__main__":
     #tests#
     #print(heroes())
-    print(plimiter("Pangolier"))
+    #print(plimiter("Pangolier"))
     #stats , parsed = parser(5359185886)
     #print(convID(['Centaur Warrunner']))
     #import time
     #start_time = time.process_time()
     #lane()
-    #print(hero(["Crit"],"Pangolier","green","Mid",[]))
+    print(hero(["Gorgc"],"Nature's Prophet","green","Any",[]))
+    print(hero(["Gorgc"],"Nature's Prophet","red","Any",[]))
     #print(hero(["Crit"], "Pangolier", "red", "Mid", []))
     #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
     #list_b = lowl()
