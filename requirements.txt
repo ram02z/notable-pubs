@@ -12,3 +12,9 @@ requests==2.22.0
 lxml==4.5.0
 pandas==0.25.1
 html5lib==1.0.1
+flask-minify==0.18
+htmlmin==0.1.12
+jsmin==2.2.2
+lesscpy==0.14.0
+ply==3.11
+xxhash==1.4.3
