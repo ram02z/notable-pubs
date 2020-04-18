@@ -37,7 +37,7 @@ function loading(){
     setTimeout(function() {
         $('#toolong').html("Taking longer than expected (ᴗ˳ᴗ)");
         $('#toolong').fadeIn("fast");
-    }, 1000);
+    }, 10000);
 }
 $(document).ready(function() {
     var table = $('#winloss').DataTable({
