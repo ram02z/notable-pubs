@@ -413,7 +413,7 @@ def parser(mID):
                         stats['players'][i]['roaming'] = True
                 if 'stats' in data['players'][i] and data['durationSeconds'] >= 660:
                     cscount = 0
-                    for m in range(11):
+                    for m in range(10):
                         cscount+= data['players'][i]['stats']['lastHitPerMinute'][m]
                     stats['players'][i]['cs10']= cscount
             stats['goodscore'] = goodscore
@@ -439,7 +439,7 @@ def parser(mID):
                         stats['players'][j]['roaming'] = True
                 if 'stats' in data['players'][j] and data['durationSeconds'] >= 660:
                     cscount = 0
-                    for k in range(11):
+                    for k in range(10):
                         cscount+= data['players'][j]['stats']['lastHitPerMinute'][k]
                     stats['players'][j]['cs10']= cscount
             stats['badscore'] = badscore
@@ -449,13 +449,14 @@ if __name__ == "__main__":
     #tests#
     #print(heroes())
     #print(plimiter("Pangolier"))
-    #stats , parsed = parser(5359185886)
+    stats , parsed = parser(5349335613)
+    print(stats)
     #print(convID(['Centaur Warrunner']))
     #import time
     #start_time = time.process_time()
     #lane()
-    print(hero(["Gorgc"],"Nature's Prophet","green","Any",[]))
-    print(hero(["Gorgc"],"Nature's Prophet","red","Any",[]))
+    #print(hero(["Gorgc"],"Nature's Prophet","green","Any",[]))
+    #print(hero(["Gorgc"],"Nature's Prophet","red","Any",[]))
     #print(hero(["Crit"], "Pangolier", "red", "Mid", []))
     #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
     #list_b = lowl()
