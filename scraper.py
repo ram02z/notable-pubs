@@ -200,6 +200,10 @@ def convLane(lID):
         lane = "Mid lane"
     elif lID == 3 or lID == 4:
         lane = "Offlane"
+    elif lID == 5:
+        lane = "Offlane and Safe lane"
+    elif lID == 6:
+        lane = "all lanes"
     elif lID == 0:
         lane = "Jungle"
     return lane
@@ -409,7 +413,12 @@ def parser(mID):
                 if 'lane' in data['players'][i]:
                     stats['players'][i]['lane'] = convLane(data['players'][i]['lane'])
                     if data['players'][i]['lane'] == 0:
-                        stats['players'][i]['lane'] = convLane(data['players'][i]['roamLane'])
+                        rlane = data['players'][i]['roamLane']
+                        ##manually setting the lane since there is a value overlap
+                        if rlane == 3:
+                            stats['players'][i]['lane'] = "Safe and Mid lane"
+                        else:
+                            stats['players'][i]['lane'] = convLane(rlane)
                         stats['players'][i]['roaming'] = True
                 if 'stats' in data['players'][i] and data['durationSeconds'] >= 660:
                     cscount = 0
@@ -435,7 +444,12 @@ def parser(mID):
                 if 'lane' in data['players'][j]:
                     stats['players'][j]['lane'] = convLane(data['players'][j]['lane'])
                     if data['players'][j]['lane'] == 0:
-                        stats['players'][j]['lane'] = convLane(data['players'][j]['roamLane'])
+                        rlane = data['players'][j]['roamLane']
+                        ##manually setting the lane since there is a value overlap
+                        if rlane == 3:
+                            stats['players'][j]['lane'] = "Safe and Mid lane"
+                        else:
+                            stats['players'][j]['lane'] = convLane(rlane)
                         stats['players'][j]['roaming'] = True
                 if 'stats' in data['players'][j] and data['durationSeconds'] >= 660:
                     cscount = 0
@@ -449,7 +463,7 @@ if __name__ == "__main__":
     #tests#
     #print(heroes())
     #print(plimiter("Pangolier"))
-    stats , parsed = parser(5349335613)
+    stats , parsed = parser(5350537124)
     print(stats)
     #print(convID(['Centaur Warrunner']))
     #import time
