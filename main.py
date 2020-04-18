@@ -1,13 +1,11 @@
 import time
 import requests
 from flask import Flask, render_template, request, flash, Markup, make_response
-from flask_minify import minify
 import scraper
 from natsort import humansorted
 import locale
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 app = Flask(__name__, template_folder='template')
-minify(app=app, html=True, js=True, cssless=True)
 app.secret_key = "23df833be15d3ab59ba66172bcfb78a0"
 
 
