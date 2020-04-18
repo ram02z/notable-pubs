@@ -5,9 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/custom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +44,27 @@
     <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RunManager" selected="Python.main">
+    <configuration name="graphql" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dota replay" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/drafts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/drafts/graphql.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python">
       <module name="dota replay" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -89,6 +110,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.scraper" />
+        <item itemvalue="Python.graphql" />
       </list>
     </recent_temporary>
   </component>
@@ -148,22 +170,22 @@
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
     <state x="804" y="326" key="FileChooserDialogImpl/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586628560644" />
-    <state width="2027" height="237" key="GridCell.Tab.0.bottom" timestamp="1587171782226">
+    <state width="2027" height="237" key="GridCell.Tab.0.bottom" timestamp="1587227395238">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state width="2027" height="237" key="GridCell.Tab.0.bottom/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587171782226" />
-    <state width="2027" height="237" key="GridCell.Tab.0.center" timestamp="1587171782225">
+    <state width="2027" height="237" key="GridCell.Tab.0.bottom/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587227395238" />
+    <state width="2027" height="237" key="GridCell.Tab.0.center" timestamp="1587227395238">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state width="2027" height="237" key="GridCell.Tab.0.center/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587171782225" />
-    <state width="2027" height="237" key="GridCell.Tab.0.left" timestamp="1587171782225">
+    <state width="2027" height="237" key="GridCell.Tab.0.center/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587227395238" />
+    <state width="2027" height="237" key="GridCell.Tab.0.left" timestamp="1587227395238">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state width="2027" height="237" key="GridCell.Tab.0.left/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587171782225" />
-    <state width="2027" height="237" key="GridCell.Tab.0.right" timestamp="1587171782225">
+    <state width="2027" height="237" key="GridCell.Tab.0.left/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587227395238" />
+    <state width="2027" height="237" key="GridCell.Tab.0.right" timestamp="1587227395238">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state width="2027" height="237" key="GridCell.Tab.0.right/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587171782225" />
+    <state width="2027" height="237" key="GridCell.Tab.0.right/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587227395238" />
     <state width="2027" height="380" key="GridCell.Tab.1.bottom" timestamp="1586396598629">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
@@ -184,10 +206,10 @@
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
     <state x="533" y="204" key="SettingsEditor/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1586648447710" />
-    <state x="721" y="386" key="com.intellij.ide.util.TipDialog" timestamp="1587217405705">
+    <state x="721" y="386" key="com.intellij.ide.util.TipDialog" timestamp="1587222352755">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state x="721" y="386" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587217405705" />
+    <state x="721" y="386" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1042/0.0.2048.1122@0.0.2048.1122" timestamp="1587222352755" />
     <state x="834" y="479" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586806928727">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>

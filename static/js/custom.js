@@ -31,13 +31,21 @@ function loading(){
     $('#loading').animate(
         { opacity: 1 },
         { queue: false, duration: 400 });
-    setTimeout(function() {
+    var id1 = setTimeout(function() {
         $('#toolong').fadeIn("fast");
     }, 5000);
-    setTimeout(function() {
-        $('#toolong').html("Taking longer than expected (ᴗ˳ᴗ)");
+    var id2 = setTimeout(function() {
+        $('#toolong').html("Taking longer than expected <i class='d2 rage align-middle'></i>");
         $('#toolong').fadeIn("fast");
     }, 10000);
+    var id3 = setTimeout(function() {
+        $('#toolong').html("Puppey has a machete to the server <i class='d2 nervous align-middle'></i>");
+        $('#toolong').fadeIn("fast");
+    }, 15000);
+    var id4 = setTimeout(function() {
+        $('#toolong').html("This is fine <i class='d2 foggy align-middle'></i>");
+        $('#toolong').fadeIn("fast");
+    }, 20000);
 }
 $(document).ready(function() {
     var table = $('#winloss').DataTable({
@@ -63,7 +71,7 @@ $('#radio4').change(function(){
    var lenplayers = $('#players > option').length;
    $('#players').data('max-options', lenplayers).selectpicker('refresh');;
    $("#matchup").val('').trigger('change').selectpicker('refresh');
-   $(".bs-select-all").prop('disabled', false);
+   $(".bs-select-all:first").prop('disabled', false);
    $("#players").selectpicker('refresh');
    $('#matchup-wrapper').collapse('hide');
    $("#matchup").prop("disabled",true).selectpicker('refresh');
@@ -75,7 +83,7 @@ $('.show-matchup').on('change', function() {
     var lenplayers2 = 5
   }
   $("#matchup").prop("disabled",false).selectpicker('refresh');
-  $(".bs-select-all").prop('disabled', true);
+  $(".bs-select-all:first").prop('disabled', true);
   $("#players").selectpicker('refresh');
   $('#players').data('max-options', lenplayers2).selectpicker('refresh');
   var data=[];

@@ -202,3 +202,155 @@ background-color: #007bff;
         transform: scale(1.15)
     }
 }
+/* https://github.com/bontscho/dota2-chat-emoticons/ */
+.d2.sleeping {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-image: url("../icons/sleeping.png");
+    transform: scale(0.75);
+    -webkit-animation: play-sleeping 2.4s steps(12) infinite;
+    -moz-animation: play-sleeping 2.4s steps(12) infinite;
+    -ms-animation: play-sleeping 2.4s steps(12) infinite;
+    -o-animation: play-sleeping 2.4s steps(12) infinite;
+    animation: play-sleeping 2.4s steps(12) infinite;
+}
+
+@-webkit-keyframes play-sleeping {
+    from { background-position: 0px; }
+    to { background-position: -384px; }
+}
+
+@-moz-keyframes play-sleeping {
+    from { background-position: 0px; }
+    to { background-position: -384px; }
+}
+
+@-ms-keyframes play-sleeping {
+    from { background-position: 0px; }
+    to { background-position: -384px; }
+}
+
+@-o-keyframes play-sleeping {
+    from { background-position: 0px; }
+    to { background-position: -384px; }
+}
+
+@keyframes play-sleeping {
+    from { background-position: 0px; }
+    to { background-position: -384px; }
+}
+
+.d2.rage {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-image: url("../icons/rage.png");
+    transform: scale(0.75);
+    -webkit-animation: play-rage 1.6s steps(16) infinite;
+    -moz-animation: play-rage 1.6s steps(16) infinite;
+    -ms-animation: play-rage 1.6s steps(16) infinite;
+    -o-animation: play-rage 1.6s steps(16) infinite;
+    animation: play-rage 1.6s steps(16) infinite;
+}
+
+@-webkit-keyframes play-rage {
+    from { background-position: 0px; }
+    to { background-position: -512px; }
+}
+
+@-moz-keyframes play-rage {
+    from { background-position: 0px; }
+    to { background-position: -512px; }
+}
+
+@-ms-keyframes play-rage {
+    from { background-position: 0px; }
+    to { background-position: -512px; }
+}
+
+@-o-keyframes play-rage {
+    from { background-position: 0px; }
+    to { background-position: -512px; }
+}
+
+@keyframes play-rage {
+    from { background-position: 0px; }
+    to { background-position: -512px; }
+}
+
+.d2.foggy {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-image: url("../icons/foggy.png");
+    transform: scale(0.75);
+    -webkit-animation: play-foggy 3.7s steps(37) infinite;
+    -moz-animation: play-foggy 3.7s steps(37) infinite;
+    -ms-animation: play-foggy 3.7s steps(37) infinite;
+    -o-animation: play-foggy 3.7s steps(37) infinite;
+    animation: play-foggy 3.7s steps(37) infinite;
+}
+
+@-webkit-keyframes play-foggy {
+    from { background-position: 0px; }
+    to { background-position: -1184px; }
+}
+
+@-moz-keyframes play-foggy {
+    from { background-position: 0px; }
+    to { background-position: -1184px; }
+}
+
+@-ms-keyframes play-foggy {
+    from { background-position: 0px; }
+    to { background-position: -1184px; }
+}
+
+@-o-keyframes play-foggy {
+    from { background-position: 0px; }
+    to { background-position: -1184px; }
+}
+
+@keyframes play-foggy {
+    from { background-position: 0px; }
+    to { background-position: -1184px; }
+}
+
+.d2.nervous {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-image: url("../icons/nervous.png");
+    transform: scale(0.75);
+    -webkit-animation: play-nervous 2.6s steps(26) infinite;
+    -moz-animation: play-nervous 2.6s steps(26) infinite;
+    -ms-animation: play-nervous 2.6s steps(26) infinite;
+    -o-animation: play-nervous 2.6s steps(26) infinite;
+    animation: play-nervous 2.6s steps(26) infinite;
+}
+
+@-webkit-keyframes play-nervous {
+    from { background-position: 0px; }
+    to { background-position: -832px; }
+}
+
+@-moz-keyframes play-nervous {
+    from { background-position: 0px; }
+    to { background-position: -832px; }
+}
+
+@-ms-keyframes play-nervous {
+    from { background-position: 0px; }
+    to { background-position: -832px; }
+}
+
+@-o-keyframes play-nervous {
+    from { background-position: 0px; }
+    to { background-position: -832px; }
+}
+
+@keyframes play-nervous {
+    from { background-position: 0px; }
+    to { background-position: -832px; }
+}
