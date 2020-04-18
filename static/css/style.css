@@ -21,7 +21,17 @@ td input, td input:focus, td input:active {
   height: 30px;
   margin: auto;
 }
-
+#toolong {
+  position: fixed;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  top: 30px;
+  bottom: 0;
+  width: 180px;
+  height: 25px;
+  margin: auto;
+}
 .btn[disabled] {
     cursor: not-allowed
 }
