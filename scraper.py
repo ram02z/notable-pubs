@@ -380,7 +380,7 @@ def parser(mID):
     response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown")
     rheader = response.headers
     if response.status_code == 200:
-        if int(rheader['X-RateLimit-Remaining-Hour']) > 0 and int(rheader['X-RateLimit-Remaining-Minute']) > 0 and int(rheader['X-RateLimit-Remaining-Second']) > 0:
+        if int(rheader['x-ratelimit-remaining-hour']) > 0 and int(rheader['x-ratelimit-limit-minute']) > 0 and int(rheader['x-ratelimit-limit-second']) > 0:
             parsed = True
             data = response.json()
             if data['didRadiantWin'] == True:

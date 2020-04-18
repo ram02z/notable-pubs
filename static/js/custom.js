@@ -121,7 +121,7 @@ function setID(inp, temp){
 }
 $(document).ready(function() {
   $("#links-wrapper").css({
-    'width': ($("#id-badge").width() + 10 + 'px')
+    'width': (318 + 'px')
   });
 });
 

@@ -26,7 +26,7 @@
     </div>
     <span style="display:none;" class="mt-4" id="toolong">Any time now :/</span>
   </div>
- <main>
+ <main id="content" style="display: none;" >
      {% block main %}{% endblock %}
  </main>
   <!-- Modal -->
@@ -99,7 +99,7 @@
         $('#loading').hide();
         $('#content').css('opacity', 0)
         $('#content').show();
-        $('#content').slideDown(400)
+        $('#content').slideDown(400);
         $('#content').animate(
             { opacity: 1 },
             { queue: false, duration: 400 });
