@@ -412,7 +412,7 @@ def parser(mID):
                 stats['players'][i]['networth'] = data['players'][i]['networth']
                 if 'lane' in data['players'][i]:
                     stats['players'][i]['lane'] = convLane(data['players'][i]['lane'])
-                    if data['players'][i]['lane'] == 0:
+                    if data['players'][i]['lane'] == 0 or data['players'][i]['lane'] == 255:
                         rlane = data['players'][i]['roamLane']
                         ##manually setting the lane since there is a value overlap
                         if rlane == 3:
@@ -443,7 +443,7 @@ def parser(mID):
                 stats['players'][j]['networth'] = data['players'][j]['networth']
                 if 'lane' in data['players'][j]:
                     stats['players'][j]['lane'] = convLane(data['players'][j]['lane'])
-                    if data['players'][j]['lane'] == 0:
+                    if data['players'][j]['lane'] == 0 or data['players'][j]['lane'] == 255:
                         rlane = data['players'][j]['roamLane']
                         ##manually setting the lane since there is a value overlap
                         if rlane == 3:

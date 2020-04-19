@@ -50,7 +50,7 @@
                         <span class="hname">{{ stats['players'][i]['hero'] }}</span>
                         <span style="display:none;" class="pname">{{ stats['players'][i]['name'] }}</span>
                         <span style="display:none;" class="permins">GPM: {{ stats['players'][i]['gpm'] }} XPM: {{ stats['players'][i]['xpm'] }} </span>
-                        <span style="display:none;" class="kda"> {{ stats['players'][i]['kills'] }}/{{ stats['players'][i]['deaths'] }}/{{ stats['players'][i]['assists'] }} </span>
+                        <span style="display:none;" class="kda">KC: {{ "%.2f"|format(((stats['players'][i]['kills'] + stats['players'][i]['assists'])/ stats['goodscore'])*100)}}% KDA: {{ stats['players'][i]['kills'] }}/{{ stats['players'][i]['deaths'] }}/{{ stats['players'][i]['assists'] }} </span>
                         <span style="display:none;" class="csat10"> {%if stats['players'][i]['cs10'] != -1 %}{{ stats['players'][i]['cs10'] }} creep kills @ 10 minutes {%else%} Unanalyzed{%endif%}</span>
                         <span style="display:none;" class="networth"> {{ stats['players'][i]['networth'] }} gold </span>
                         <span style="display:none;" class="plane"> {%if stats['players'][i]['lane'] != -1%}{%if stats['players'][i]['roaming']%}Roamed around {{ stats['players'][i]['lane'] | lower }}{%else%} {{ stats['players'][i]['lane'] }}{%endif%} {%else%} Unanalyzed {%endif%} </span>
@@ -71,7 +71,7 @@
                         <span class="hname"> {{ stats['players'][j]['hero'] }}</span>
                         <span style="display:none;" class="pname"> {{ stats['players'][j]['name'] }}</span>
                         <span style="display:none;" class="permins"> GPM: {{ stats['players'][j]['gpm'] }} XPM: {{ stats['players'][j]['xpm'] }} </span>
-                        <span style="display:none;" class="kda"> {{ stats['players'][j]['kills'] }}/{{ stats['players'][j]['deaths'] }}/{{ stats['players'][j]['assists'] }} </span>
+                        <span style="display:none;" class="kda"> KDA: {{ stats['players'][j]['kills'] }}/{{ stats['players'][j]['deaths'] }}/{{ stats['players'][j]['assists'] }} KC: {{ "%.2f"|format(((stats['players'][j]['kills'] + stats['players'][j]['assists'])/ stats['badscore'])*100)}}%</span>
                         <span style="display:none;" class="csat10"> {%if stats['players'][j]['cs10'] != -1 %}{{ stats['players'][j]['cs10'] }} creep kills @ 10 minutes {%else%} Unanalyzed{%endif%}</span>
                         <span style="display:none;" class="networth"> {{ stats['players'][j]['networth'] }} gold </span>
                         <span style="display:none;" class="plane"> {%if stats['players'][j]['lane'] != -1%}{%if stats['players'][j]['roaming']%}Roamed around {{ stats['players'][j]['lane'] | lower }}{%else%} {{ stats['players'][j]['lane'] }}{%endif%} {%else%} Unanalyzed {%endif%} </span>
@@ -89,7 +89,7 @@
                   <button id="hname" disabled type="button" class="rounded m-1 btn btn-dark">Hero name</button>
                   <button id="pname" type="button" class="rounded m-1 btn btn-dark">Player name</button>
                   <button id="permins" type="button" class=" rounded m-1 btn btn-dark">GPM/XPM</button>
-                  <button id="kda" type="button" class=" rounded m-1 btn btn-dark">KDA</button>
+                  <button id="kda" type="button" class=" rounded m-1 btn btn-dark">KDA/KC</button>
                   <button id="csat10" type="button" class="rounded m-1 btn btn-dark">CS @ 10</button>
                   <button id="networth" type="button" class=" rounded m-1 btn btn-dark">Networth</button>
                   <button id="plane" type="button" class="rounded m-1 btn btn-dark">Lane</button>
