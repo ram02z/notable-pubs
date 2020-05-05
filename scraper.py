@@ -4,6 +4,8 @@ from requests import exceptions
 import pandas as pd
 from json import loads
 from requests.utils import requote_uri
+import os
+TOKEN = os.getenv('BEARER_TOKEN')
 #from selenium import webdriver
 
 def pagereq(url):
@@ -93,7 +95,7 @@ def lane(mID, hID,role, matchup):
         laneno, xlane = 3 , 1#offlane and safe lane
     if role == "Safe":
         laneno ,xlane = 1 ,3#safe lane and offlane
-    response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown")
+    response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown", headers={"Authorization":f"Bearer {TOKEN}"})
     rheader = response.headers
     if response.status_code == 200:
         if int(rheader['x-ratelimit-remaining-hour']) > 0 and int(rheader['x-ratelimit-limit-minute']) > 0 and int(rheader['x-ratelimit-limit-second']) > 0:
@@ -381,7 +383,7 @@ def parser(mID):
             }
         }
     }
-    response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown")
+    response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown", headers={"Authorization":f"Bearer {TOKEN}"})
     rheader = response.headers
     if response.status_code == 200:
         if int(rheader['x-ratelimit-remaining-hour']) > 0 and int(rheader['x-ratelimit-limit-minute']) > 0 and int(rheader['x-ratelimit-limit-second']) > 0:
