@@ -96,8 +96,9 @@ def lane(mID, hID,role, matchup):
     if role == "Safe":
         laneno ,xlane = 1 ,3#safe lane and offlane
     response = requests.get(f"https://api.stratz.com/api/v1/match/{mID}/breakdown", headers={"Authorization":f"Bearer {TOKEN}"})
+    status = response.status_code
     rheader = response.headers
-    if response.status_code == 200:
+    if status == 200:
         if int(rheader['x-ratelimit-remaining-hour']) > 0 and int(rheader['x-ratelimit-limit-minute']) > 0 and int(rheader['x-ratelimit-limit-second']) > 0:
             data = response.json()['players']
             if 'lane' in data[0]:
@@ -116,13 +117,14 @@ def lane(mID, hID,role, matchup):
                                 for k in range(0,10):
                                     if data[k]['heroId'] in h2ID and data[k]['lane'] == xlane and data[k]['isRadiant'] != side:
                                         flag = True
-
         else:
             limited = True
+    elif status == 204:
+        limited  = False
     else:
         limited = True
     return flag, limited
-    
+
 ##Specific Hero##
 def hero(player, hero,outcome, role, matchup):
     hID = convID(hero)
@@ -465,13 +467,14 @@ if __name__ == "__main__":
     #tests#
     #print(heroes())
     #print(plimiter("Pangolier"))
-    stats , parsed = parser(5350537124)
-    print(stats)
+    #stats , parsed = parser(5426720332)
+    #print(stats)
     #print(convID(['Centaur Warrunner']))
     #import time
     #start_time = time.process_time()
     #lane()
-    #print(hero(["Gorgc"],"Nature's Prophet","green","Any",[]))
+    #test_hero()
+    print(hero(["s4"],"Dragon Knight","green","Off",[]))
     #print(hero(["Gorgc"],"Nature's Prophet","red","Any",[]))
     #print(hero(["Crit"], "Pangolier", "red", "Mid", []))
     #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
