@@ -5,6 +5,8 @@ import pandas as pd
 from json import loads
 from requests.utils import requote_uri
 import os
+from dotenv import load_dotenv
+load_dotenv()
 TOKEN = os.getenv('BEARER_TOKEN')
 #from selenium import webdriver
 
@@ -151,15 +153,15 @@ def hero(player, hero,outcome, role, matchup):
                             pro_names.append(i)
                         else:
                             pro_names.append("0")
-                        match_time.append(tds[7].text)
-                        avg_mmr.append(tds[4].text)
+                        match_time.append(tds[8].text)
+                        avg_mmr.append(tds[5].text)
                         match_ids.append(mID)
                         if outcome == "green":
                             loutcome.append("win")
                         else:
                             loutcome.append("loss")
-                        
-    #order of matches in list is new to old       
+
+    #order of matches in list is new to old
     return match_ids[::-1],avg_mmr[::-1], match_time[::-1], loutcome[::-1], pro_names[::-1], limited
 
 
@@ -474,7 +476,7 @@ if __name__ == "__main__":
     #start_time = time.process_time()
     #lane()
     #test_hero()
-    print(hero(["s4"],"Dragon Knight","green","Off",[]))
+    print(hero(["Gorgc"],"Phantom Lancer","green","Safe",[]))
     #print(hero(["Gorgc"],"Nature's Prophet","red","Any",[]))
     #print(hero(["Crit"], "Pangolier", "red", "Mid", []))
     #print("--- %s seconds ---" % round(time.process_time() - start_time, 10))
