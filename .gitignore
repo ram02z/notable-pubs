@@ -1,3 +1,4 @@
-/env
+env/
 .idea/scraper_old.py
-/drafts
+drafts/
+__pycache__/
